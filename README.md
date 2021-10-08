@@ -10,14 +10,14 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 1. Clone the repository
 ```bash
-git clone https://github.com/saifulislamdev/sylica-backend.git
+git clone https://github.com/saifulislamdev/sylica-frontend.git
 ```
 1. Install dependencies
 Run the following to install the dependencies
 ```bash
 npm i
 ```
-1. Setup env file
+1. Setup env file. 
 Create an .env file in the root of the repository with the following environment variables.
 
 ## Repo Structure
