@@ -11,10 +11,10 @@ function App() {
 			<Container maxWidth='container.xl' p={0}>
 				<Router>
 					<Switch>
-						<Route path='/' exact>
+						<Route path='/auth/signup' exact>
 							<SignUp />
 						</Route>
-						<Route path='/login' exact>
+						<Route path='/auth/signin' exact>
 							<LogIn />
 						</Route>
 					</Switch>

@@ -105,7 +105,10 @@ export default function LogIn() {
 							<GridItem colSpan={2}>
 								<Text>
 									Not a member?{' '}
-									<Link to='/' style={{ textDecoration: 'underline' }}>
+									<Link
+										to='/auth/signup'
+										style={{ textDecoration: 'underline' }}
+									>
 										Sign Up
 									</Link>
 								</Text>
