@@ -48,7 +48,7 @@ export default function SignUp() {
 		});
 
 		if (isValid) {
-			const URI = 'http://localhost:5000/signup'; // URI is subject to change
+			const URI = 'http://localhost:5000/api/auth/signup'; // URI is subject to change
 			axios
 				.post(URI, {
 					firstName: firstName,
@@ -71,7 +71,7 @@ export default function SignUp() {
 				p={10}
 				spacing={10}
 				alignItems='flex-start'
-				bg='#E2E8F0'
+				bg='gray.50'
 			>
 				<Heading size='2xl'>
 					"Lorem ipsum dolor sit amet, consectetur. Lorem ipsum lorem ipsum"

@@ -38,7 +38,7 @@ export default function LogIn() {
 		});
 
 		if (isValid) {
-			const URI = 'http://localhost:5000/login'; // URI is subject to change
+			const URI = 'http://localhost:5000/api/auth/signin'; // URI is subject to change
 			axios
 				.post(URI, { email: email, password: password })
 				.then((response) => console.log(response.data))
@@ -57,7 +57,7 @@ export default function LogIn() {
 					p={10}
 					spacing={10}
 					alignItems='flex-start'
-					bg='#E2E8F0'
+					bg='gray.50'
 				>
 					<Heading size='2xl'>
 						"Lorem ipsum dolor sit amet, consectetur. Lorem ipsum lorem ipsum"
