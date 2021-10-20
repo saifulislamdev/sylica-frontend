@@ -41,12 +41,21 @@ export default function LogIn() {
 
 		if (isValid) {
 			const URI = 'http://localhost:5000/api/auth/signin'; // URI is subject to change
+
+			// try {
+			// 	const res = await axios.post(URI, { email: email, password: password });
+			// 	console.log(res.data);
+			// } catch (err) {
+			// 	console.log(err.response.data);
+			// }
+
 			axios
 				.post(URI, { email: email, password: password })
-				.then((response) => console.log(response.data))
+				.then((response) => {
+					console.log(response.data);
+				})
 				.catch((err) => {
-					console.error(err);
-					setErrorMessage(err.msg); // msg is the field for error message from backend
+					setErrorMessage(err.response.data.msg); // msg is the field for error message from backend
 					setError(true);
 				});
 		} else {
