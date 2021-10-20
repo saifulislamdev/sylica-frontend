@@ -60,8 +60,7 @@ export default function SignUp() {
 				})
 				.then((response) => console.log(response.data))
 				.catch((err) => {
-					console.error(err);
-					setErrorMessage(err.msg); // msg is the field for error message from backend
+					setErrorMessage(err.response.data.msg); // msg is the field for error message from backend
 					setError(true);
 				});
 		} else {
