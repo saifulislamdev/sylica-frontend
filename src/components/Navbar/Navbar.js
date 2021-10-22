@@ -12,16 +12,22 @@ import { colors } from '../../util/Constants';
 
 export default function Navbar() {
 	return (
-		<Flex p='4' alignItems='center'>
+		<Flex
+			p='4'
+			alignItems='center'
+			position='sticky'
+			top='0'
+			bg='white'
+			zIndex='10'
+		>
 			<Box>
 				<Heading>Sylica</Heading>
 			</Box>
 			<Spacer />
 			<Box p='4'>
 				<Select placeholder='Account'>
-					<option value='option1'>Option 1</option>
-					<option value='option2'>Option 2</option>
-					<option value='option3'>Option 3</option>
+					<option value='Your Orders'>Your Orders</option>
+					<option value='Sell Product'>Sell Product</option>
 				</Select>
 			</Box>
 			<Box p='4'>

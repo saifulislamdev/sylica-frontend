@@ -104,7 +104,7 @@ export default function LogIn() {
 								<Button
 									size='lg'
 									w='full'
-									bg='#718096'
+									bg='teal.500'
 									color='white'
 									type='submit'
 								>
