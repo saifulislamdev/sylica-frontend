@@ -16,6 +16,7 @@ import {
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import * as Yup from 'yup';
+import { colors } from '../../util/Constants';
 
 export default function SignUp() {
 	const [firstName, setFirstName] = useState('');
@@ -151,7 +152,7 @@ export default function SignUp() {
 								type='submit'
 								size='lg'
 								w='full'
-								bg='#718096'
+								bg={colors.primary}
 								color='white'
 							>
 								Create Account
