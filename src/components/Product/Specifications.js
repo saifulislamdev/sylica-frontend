@@ -3,10 +3,12 @@ import { Heading, Table, Tbody, Tr, Td } from "@chakra-ui/react";
 
 import "../../styles/Specifications.css";
 
-export default function Specifications({ specifications }) {
+const Specifications = ({ specifications }) => {
     return (
         <div>
-            <Heading className="specification__heading" size="lg">Specifications</Heading>
+            <Heading className="specification__heading" size="lg">
+                Specifications
+            </Heading>
             {specifications.map((table) => {
                 return (
                     <div className="specification__table">
@@ -16,7 +18,9 @@ export default function Specifications({ specifications }) {
                                 {table[Object.keys(table)[0]].map((row) => {
                                     return (
                                         <Tr>
-                                            <Td w="50%">{Object.keys(row)[0]}</Td>
+                                            <Td w="50%">
+                                                {Object.keys(row)[0]}
+                                            </Td>
                                             {!isNaN(
                                                 +row[Object.keys(row)[0]]
                                             ) ? (
@@ -38,4 +42,6 @@ export default function Specifications({ specifications }) {
             })}
         </div>
     );
-}
+};
+
+export default Specifications;
