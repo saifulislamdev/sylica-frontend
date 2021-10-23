@@ -16,6 +16,7 @@ import {
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import * as Yup from 'yup';
+import { colors } from '../../util/Constants';
 
 export default function SignUp() {
 	const [firstName, setFirstName] = useState('');
@@ -24,6 +25,7 @@ export default function SignUp() {
 	const [password, setPassword] = useState('');
 	const [repeatPassword, setRepeatPassword] = useState('');
 	const [error, setError] = useState(false); // if any input validation error occur
+	const [errorMessage, setErrorMessage] = useState('');
 
 	// input validation schema
 	const signupSchema = Yup.object().shape({
@@ -38,7 +40,8 @@ export default function SignUp() {
 
 	const handleClick = async (e) => {
 		e.preventDefault();
-		setError(false); // resetting the error messgae
+		setError(false); // resetting the error flag
+		setErrorMessage(''); // resetting error message
 		const isValid = await signupSchema.isValid({
 			firstName: firstName,
 			lastName: lastName,
@@ -57,9 +60,13 @@ export default function SignUp() {
 					password: password,
 				})
 				.then((response) => console.log(response.data))
-				.catch((err) => console.log(err));
+				.catch((err) => {
+					setErrorMessage(err.response.data.msg); // msg is the field for error message from backend
+					setError(true);
+				});
 		} else {
 			setError(true); // indicates one or more field doesnt meet requirement
+			setErrorMessage('One or more input is invalid');
 		}
 	};
 
@@ -145,7 +152,7 @@ export default function SignUp() {
 								type='submit'
 								size='lg'
 								w='full'
-								bg='#718096'
+								bg={colors.primary}
 								color='white'
 							>
 								Create Account
@@ -159,7 +166,7 @@ export default function SignUp() {
 								</Link>
 							</Text>
 							{error ? (
-								<Text style={{ color: 'red' }}>One or more invalid input</Text>
+								<Text style={{ color: 'red' }}>{errorMessage}</Text>
 							) : null}
 						</GridItem>
 					</SimpleGrid>

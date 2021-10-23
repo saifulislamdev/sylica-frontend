@@ -22,6 +22,7 @@ export default function LogIn() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState(false); // if any input validation error occur
+	const [errorMessage, setErrorMessage] = useState('');
 
 	// input validation schema
 	const logInSchema = Yup.object().shape({
@@ -32,6 +33,7 @@ export default function LogIn() {
 	const handleClick = async (e) => {
 		e.preventDefault();
 		setError(false); // resetting the error messgae
+		setErrorMessage(''); // resetting error message
 		const isValid = await logInSchema.isValid({
 			email: email,
 			password: password,
@@ -39,12 +41,19 @@ export default function LogIn() {
 
 		if (isValid) {
 			const URI = 'http://localhost:5000/api/auth/signin'; // URI is subject to change
+
 			axios
 				.post(URI, { email: email, password: password })
-				.then((response) => console.log(response.data))
-				.catch((err) => console.log(err));
+				.then((response) => {
+					console.log(response.data);
+				})
+				.catch((err) => {
+					setErrorMessage(err.response.data.msg); // msg is the field for error message from backend
+					setError(true);
+				});
 		} else {
 			setError(true); // indicates one or more field doesnt meet requirement
+			setErrorMessage('One or more input is invalid');
 		}
 	};
 
@@ -95,7 +104,7 @@ export default function LogIn() {
 								<Button
 									size='lg'
 									w='full'
-									bg='#718096'
+									bg='teal.500'
 									color='white'
 									type='submit'
 								>
@@ -113,9 +122,7 @@ export default function LogIn() {
 									</Link>
 								</Text>
 								{error ? (
-									<Text style={{ color: 'red' }}>
-										One or more invalid input
-									</Text>
+									<Text style={{ color: 'red' }}>{errorMessage}</Text>
 								) : null}
 							</GridItem>
 						</SimpleGrid>
