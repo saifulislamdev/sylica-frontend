@@ -11,7 +11,7 @@ export default function Specifications({ specifications }) {
                 return (
                     <div className="specification__table">
                         <Heading size="md">{Object.keys(table)[0]}</Heading>
-                        <Table variant="striped" colorScheme="teal">
+                        <Table>
                             <Tbody>
                                 {table[Object.keys(table)[0]].map((row) => {
                                     return (
