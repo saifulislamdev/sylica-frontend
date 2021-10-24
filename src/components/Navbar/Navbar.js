@@ -9,9 +9,8 @@ import {
 	Badge,
 } from '@chakra-ui/react';
 import { AiOutlineShoppingCart, AiOutlineUser } from 'react-icons/ai';
-import { colors } from '../../util/Constants';
 
-export default function Navbar() {
+const Navbar = () => {
 	return (
 		<Flex
 			p='4'
@@ -44,6 +43,8 @@ export default function Navbar() {
 					variant='outline'
 					colorScheme='teal'
 					style={{
+						alignItems: 'center',
+						justifyContent: 'center',
 						borderRadius: '50%',
 						backgroundColor: 'white',
 						position: 'relative',
@@ -57,4 +58,6 @@ export default function Navbar() {
 			</Box>
 		</Flex>
 	);
-}
+};
+
+export default Navbar;

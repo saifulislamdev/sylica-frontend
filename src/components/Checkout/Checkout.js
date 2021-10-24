@@ -1,17 +1,26 @@
 import React from 'react';
-import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import PaymentForm from './PaymentForm';
+import {
+	Heading,
+	Flex,
+	VStack,
+	Image,
+	SimpleGrid,
+	GridItem,
+	FormControl,
+	FormLabel,
+	Input,
+	Text,
+	Button,
+} from '@chakra-ui/react';
 
-const stripePromise = loadStripe(
-	'pk_test_51IlQGnEwHOsES7xUluOPPi4TS3wGXqraJVNWZvGMNlEY9HAg0ust8ilDKraQEV5T891nLuYgGoUP1FZAZtMRh5Oi00FpRjnaCu' ??
-		''
-);
-
-export default function Checkout() {
+const Checkout = () => {
 	return (
-		<Elements stripe={stripePromise}>
-			<PaymentForm />
-		</Elements>
+		<Flex h='100vh' py={4} style={{ border: '1px solid gray.50' }}>
+			<VStack>checkout</VStack>
+		</Flex>
 	);
-}
+};
+
+export default Checkout;

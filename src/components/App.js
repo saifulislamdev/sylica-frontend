@@ -7,7 +7,7 @@ import Checkout from './Checkout/Checkout';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './Navbar/Navbar';
 
-function App() {
+const App = () => {
 	return (
 		<ChakraProvider>
 			<Container maxWidth='container.xl' p={0}>
@@ -20,11 +20,14 @@ function App() {
 						<Route path='/auth/signin' exact>
 							<LogIn />
 						</Route>
+						<Route path='/checkout' exact>
+							<Checkout />
+						</Route>
 					</Switch>
 				</Router>
 			</Container>
 		</ChakraProvider>
 	);
-}
+};
 
 export default App;
