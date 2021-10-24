@@ -10,7 +10,7 @@ import Specifications from './Product/Specifications';
 
 import '../styles/App.css';
 
-function App() {
+const App = () => {
 	return (
 		<ChakraProvider>
 			<Container maxWidth='container.xl' p={0}>
@@ -22,6 +22,9 @@ function App() {
 						</Route>
 						<Route path='/auth/signin' exact>
 							<LogIn />
+						</Route>
+						<Route path='checkout' exact>
+							<Checkout />
 						</Route>
 						{/* TODO: remove later (temporary) */}
 						<Route path='/product/product-details' exact>
@@ -42,6 +45,6 @@ function App() {
 			</Container>
 		</ChakraProvider>
 	);
-}
+};
 
 export default App;

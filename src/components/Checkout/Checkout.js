@@ -8,10 +8,12 @@ const stripePromise = loadStripe(
 		''
 );
 
-export default function Checkout() {
+const Checkout = () => {
 	return (
 		<Elements stripe={stripePromise}>
 			<PaymentForm />
 		</Elements>
 	);
-}
+};
+
+export default Checkout;

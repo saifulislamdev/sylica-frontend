@@ -18,7 +18,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import * as Yup from 'yup';
 
-export default function LogIn() {
+const LogIn = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState(false); // if any input validation error occur
@@ -131,4 +131,6 @@ export default function LogIn() {
 			</Flex>
 		</div>
 	);
-}
+};
+
+export default LogIn;

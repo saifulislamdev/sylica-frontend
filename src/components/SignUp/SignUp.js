@@ -18,7 +18,7 @@ import axios from 'axios';
 import * as Yup from 'yup';
 import { colors } from '../../util/Constants';
 
-export default function SignUp() {
+const SignUp = () => {
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
 	const [email, setEmail] = useState('');
@@ -174,4 +174,6 @@ export default function SignUp() {
 			</VStack>
 		</Flex>
 	);
-}
+};
+
+export default SignUp;
