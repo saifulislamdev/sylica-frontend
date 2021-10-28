@@ -1,13 +1,12 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import { Container } from '@chakra-ui/react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-
+import { Elements } from '@stripe/react-stripe-js';
 import Checkout from './Checkout/Checkout';
 import LogIn from './LogIn/LogIn';
 import Navbar from './Navbar/Navbar';
 import SignUp from './SignUp/SignUp';
 import Specifications from './Product/Specifications';
-
 import '../styles/App.css';
 
 const App = () => {
@@ -23,7 +22,7 @@ const App = () => {
 						<Route path='/auth/signin' exact>
 							<LogIn />
 						</Route>
-						<Route path='checkout' exact>
+						<Route path='/checkout' exact>
 							<Checkout />
 						</Route>
 						{/* TODO: remove later (temporary) */}
