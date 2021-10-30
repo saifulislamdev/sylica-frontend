@@ -18,6 +18,8 @@ import axios from 'axios';
 import * as Yup from 'yup';
 import { colors } from '../../util/Constants';
 
+const PROXY = process.env.REACT_APP_PROXY;
+
 export default function SignUp() {
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
@@ -51,7 +53,7 @@ export default function SignUp() {
 		});
 
 		if (isValid) {
-			const URI = 'http://localhost:5000/api/auth/signup'; // URI is subject to change
+			const URI = PROXY + '/api/auth/signup';
 			axios
 				.post(URI, {
 					firstName: firstName,

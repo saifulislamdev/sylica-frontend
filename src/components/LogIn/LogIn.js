@@ -18,6 +18,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import * as Yup from 'yup';
 
+const PROXY = process.env.REACT_APP_PROXY;
+
 export default function LogIn() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -40,7 +42,7 @@ export default function LogIn() {
 		});
 
 		if (isValid) {
-			const URI = 'http://localhost:5000/api/auth/signin'; // URI is subject to change
+			const URI = PROXY + '/api/auth/signin';
 
 			axios
 				.post(URI, { email: email, password: password })

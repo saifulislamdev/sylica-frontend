@@ -17,6 +17,8 @@ import { useEffect, useState } from 'react';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import axios from 'axios';
 
+const PROXY = process.env.REACT_APP_PROXY;
+
 const PaymentForm = () => {
 	// Simple cardError state to show error from stripe card element
 	const [cardError, setCardError] = useState('');
@@ -28,7 +30,7 @@ const PaymentForm = () => {
 
 	const createPaymentIntent = async () => {
 		const res = await axios.post(
-			'http://localhost:5000/api/payment/create-payment-intent',
+			PROXY + '/api/payment/create-payment-intent',
 			{
 				amount: 1000,
 			}
