@@ -21,7 +21,7 @@ npm i
 Create an .env file in the root of the repository with the following environment variables.
 ```
 # Port can be interchanged (e.g. 5000)
-REACT_APP_PROXY="http://localhost:5000"
+REACT_APP_PROXY="http://localhost:5000/api"
 ```
 
 ## Repo Structure
