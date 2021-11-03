@@ -8,7 +8,7 @@ import {
 	IconButton,
 } from '@chakra-ui/react';
 import { AiOutlineShoppingCart, AiOutlineUser } from 'react-icons/ai';
-import { colors } from '../../util/Constants';
+import { colors } from '../../util/constants';
 
 export default function Navbar() {
 	return (

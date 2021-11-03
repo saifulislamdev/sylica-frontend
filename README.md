@@ -19,6 +19,10 @@ npm i
 ```
 1. Setup env file. 
 Create an .env file in the root of the repository with the following environment variables.
+```
+# Port can be interchanged (e.g. 5000)
+REACT_APP_PROXY="http://localhost:5000/api"
+```
 
 ## Repo Structure
 All of the source code will be found in `/src` folder.
