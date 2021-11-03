@@ -1,34 +1,32 @@
-import React from "react";
-import { Heading, Table, Tbody, Tr, Td } from "@chakra-ui/react";
-
-import "../../styles/Specifications.css";
+import React from 'react';
+import { Box, Heading, Table, Tbody, Tr, Td } from '@chakra-ui/react';
 
 const Specifications = ({ specifications }) => {
     return (
         <div>
-            <Heading className="specification__heading" size="lg">
+            <Heading size='lg' m='16px'>
                 Specifications
             </Heading>
             {specifications.map((table) => {
                 return (
-                    <div className="specification__table">
-                        <Heading size="md">{Object.keys(table)[0]}</Heading>
+                    <Box p='16px'>
+                        <Heading size='md'>{Object.keys(table)[0]}</Heading>
                         <Table>
                             <Tbody>
                                 {table[Object.keys(table)[0]].map((row) => {
                                     return (
                                         <Tr>
-                                            <Td w="50%">
+                                            <Td w='50%'>
                                                 {Object.keys(row)[0]}
                                             </Td>
                                             {!isNaN(
                                                 +row[Object.keys(row)[0]]
                                             ) ? (
-                                                <Td isNumeric w="50%">
+                                                <Td isNumeric w='50%'>
                                                     {row[Object.keys(row)[0]]}
                                                 </Td>
                                             ) : (
-                                                <Td w="50%">
+                                                <Td w='50%'>
                                                     {row[Object.keys(row)[0]]}
                                                 </Td>
                                             )}
@@ -37,7 +35,7 @@ const Specifications = ({ specifications }) => {
                                 })}
                             </Tbody>
                         </Table>
-                    </div>
+                    </Box>
                 );
             })}
         </div>
