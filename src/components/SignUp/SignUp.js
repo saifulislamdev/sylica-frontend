@@ -16,7 +16,7 @@ import {
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import * as Yup from 'yup';
-import { colors } from '../../util/Constants';
+import { colors } from '../../util/constants';
 
 export default function SignUp() {
 	const [firstName, setFirstName] = useState('');
