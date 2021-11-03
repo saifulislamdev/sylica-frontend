@@ -24,6 +24,9 @@ function App() {
                         <Route path='/auth/signin' exact>
                             <LogIn />
                         </Route>
+                        <Route path='/checkout' exact>
+							<Checkout />
+						</Route>
                         {/* TODO: remove later (temporary) */}
                         <Route path='/product/product-details' exact>
                             <ProductDetail
