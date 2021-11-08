@@ -25,8 +25,8 @@ function App() {
                             <LogIn />
                         </Route>
                         <Route path='/checkout' exact>
-							<Checkout />
-						</Route>
+                            <Checkout />
+                        </Route>
                         {/* TODO: remove later (temporary) */}
                         <Route path='/product/product-details' exact>
                             <ProductDetail
@@ -39,14 +39,28 @@ function App() {
                         <Route path='/product/product-specifications' exact>
                             <Specifications
                                 specifications={[
-                                    { Text: [{ a: 'b' }] },
-                                    { Text: [{ cd: 'ef' }, { gh: 'ij' }] },
-                                    { Text: [{ klm: 'nop' }, { qrs: 'tuv' }] },
                                     {
-                                        Text: [
-                                            { w: 'x' },
-                                            { y: 'z' },
-                                            { z: 'z' },
+                                        heading: 'General',
+                                        rows: [
+                                            ['a', 'b'],
+                                            ['c', 'd'],
+                                            ['e', 'f'],
+                                        ],
+                                    },
+                                    {
+                                        heading: 'CPU',
+                                        rows: [
+                                            ['g', 'h'],
+                                            ['i', 'j'],
+                                            ['k', 'l'],
+                                        ],
+                                    },
+                                    {
+                                        heading: 'Screen',
+                                        rows: [
+                                            ['m', 'n'],
+                                            ['o', 'p'],
+                                            ['q', 'r'],
                                         ],
                                     },
                                 ]}

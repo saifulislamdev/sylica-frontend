@@ -28,6 +28,9 @@ const ProductDetail = ({
 }) => {
     const [quantity, setQuantity] = useState(0);
 
+    const isOutOfStock =
+        isNaN(parseInt(maxQuantity)) || parseInt(maxQuantity) === 0;
+
     return (
         <Container>
             <Heading mb='16px' size='lg'>
@@ -40,7 +43,7 @@ const ProductDetail = ({
                 Price
             </Text>
             <Text fontSize='2xl' mb='16px'>{`$${price}`}</Text>
-            {parseInt(maxQuantity) === 0 && (
+            {isOutOfStock && (
                 <Tag
                     bg={colors.primary}
                     color={colors.neutralWhite}
@@ -70,7 +73,7 @@ const ProductDetail = ({
                 />
                 <FormControl
                     id='quantity'
-                    isDisabled={parseInt(maxQuantity) === 0}
+                    isDisabled={isOutOfStock}
                     isInvalid={isNaN(+quantity)}
                     maxW={`${Math.floor(Math.log10(quantity + 1)) * 8 + 60}px`} // expands automatically by expanding 8px for every digit
                     mx='8px'
@@ -81,8 +84,8 @@ const ProductDetail = ({
                     <NumberInput
                         // onChange={handleChange}
                         value={quantity}
-                        defaultValue={1 ? parseInt(maxQuantity) : 0}
-                        max={parseInt(maxQuantity)}
+                        defaultValue={isOutOfStock ? 0 : 1}
+                        max={isOutOfStock ? 0 : parseInt(maxQuantity)}
                         min={0}
                         allowMouseWheel='true'
                         inputMode='numerical'
@@ -95,7 +98,9 @@ const ProductDetail = ({
                     onClick={() => {
                         setQuantity(quantity + 1);
                     }}
-                    isDisabled={quantity === parseInt(maxQuantity)}
+                    isDisabled={
+                        isOutOfStock || quantity === parseInt(maxQuantity)
+                    }
                     icon={<MdOutlineArrowForwardIos />}
                     bg={colors.secondary}
                     opacity='0.5'
