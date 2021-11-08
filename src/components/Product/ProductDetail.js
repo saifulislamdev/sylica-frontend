@@ -26,10 +26,19 @@ const ProductDetail = ({
     price,
     maxQuantity,
 }) => {
-    const [quantity, setQuantity] = useState(0);
-
+    // if proper number not passed in for maxQuantity or it is actually out of stock
     const isOutOfStock =
         isNaN(parseInt(maxQuantity)) || parseInt(maxQuantity) === 0;
+
+    const [quantity, setQuantity] = useState(isOutOfStock ? 0 : 1);
+
+    const handleChange = (e) => {
+        if (e === '') setQuantity(0); // empty input
+        const passedInQuantity = parseInt(e);
+        if (isNaN(passedInQuantity)) return; // invalid characters passed in (e.g. letters)
+        const isWithinRange = 0 <= passedInQuantity && passedInQuantity <= parseInt(maxQuantity); // within maximum quantity bound
+        if (isWithinRange) setQuantity(passedInQuantity);
+    }
 
     return (
         <Container>
@@ -82,9 +91,8 @@ const ProductDetail = ({
                     variant='input'
                 >
                     <NumberInput
-                        // onChange={handleChange}
+                        onChange={handleChange}
                         value={quantity}
-                        defaultValue={isOutOfStock ? 0 : 1}
                         max={isOutOfStock ? 0 : parseInt(maxQuantity)}
                         min={0}
                         allowMouseWheel='true'
