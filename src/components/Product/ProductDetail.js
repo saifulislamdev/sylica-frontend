@@ -26,7 +26,19 @@ const ProductDetail = ({
     price,
     maxQuantity,
 }) => {
-    const [quantity, setQuantity] = useState(0);
+    // if proper number not passed in for maxQuantity or it is actually out of stock
+    const isOutOfStock =
+        isNaN(parseInt(maxQuantity)) || parseInt(maxQuantity) === 0;
+
+    const [quantity, setQuantity] = useState(isOutOfStock ? 0 : 1);
+
+    const handleChange = (e) => {
+        if (e === '') setQuantity(0); // empty input
+        const passedInQuantity = parseInt(e);
+        if (isNaN(passedInQuantity)) return; // invalid characters passed in (e.g. letters)
+        const isWithinRange = 0 <= passedInQuantity && passedInQuantity <= parseInt(maxQuantity); // within maximum quantity bound
+        if (isWithinRange) setQuantity(passedInQuantity);
+    }
 
     return (
         <Container>
@@ -40,7 +52,7 @@ const ProductDetail = ({
                 Price
             </Text>
             <Text fontSize='2xl' mb='16px'>{`$${price}`}</Text>
-            {parseInt(maxQuantity) === 0 && (
+            {isOutOfStock && (
                 <Tag
                     bg={colors.primary}
                     color={colors.neutralWhite}
@@ -70,7 +82,7 @@ const ProductDetail = ({
                 />
                 <FormControl
                     id='quantity'
-                    isDisabled={parseInt(maxQuantity) === 0}
+                    isDisabled={isOutOfStock}
                     isInvalid={isNaN(+quantity)}
                     maxW={`${Math.floor(Math.log10(quantity + 1)) * 8 + 60}px`} // expands automatically by expanding 8px for every digit
                     mx='8px'
@@ -79,10 +91,9 @@ const ProductDetail = ({
                     variant='input'
                 >
                     <NumberInput
-                        // onChange={handleChange}
+                        onChange={handleChange}
                         value={quantity}
-                        defaultValue={1 ? parseInt(maxQuantity) : 0}
-                        max={parseInt(maxQuantity)}
+                        max={isOutOfStock ? 0 : parseInt(maxQuantity)}
                         min={0}
                         allowMouseWheel='true'
                         inputMode='numerical'
@@ -95,7 +106,9 @@ const ProductDetail = ({
                     onClick={() => {
                         setQuantity(quantity + 1);
                     }}
-                    isDisabled={quantity === parseInt(maxQuantity)}
+                    isDisabled={
+                        isOutOfStock || quantity === parseInt(maxQuantity)
+                    }
                     icon={<MdOutlineArrowForwardIos />}
                     bg={colors.secondary}
                     opacity='0.5'
