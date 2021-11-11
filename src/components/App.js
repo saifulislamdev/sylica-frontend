@@ -9,8 +9,6 @@ import Navbar from "./Navbar/Navbar";
 import SignUp from "./SignUp/SignUp";
 import ProductDetail from "./Product/ProductDetail";
 import Specifications from "./Product/Specifications";
-import Cart from "./Cart/Cart";
-
 import "../styles/App.css";
 
 function App() {
@@ -91,9 +89,6 @@ function App() {
               </Route>
               <Route path="/checkout" exact>
                 <Checkout />
-              </Route>
-              <Route path="/cart" exact>
-                <Cart />
               </Route>
               {/* TODO: remove later (temporary) */}
               <Route path="/product/product-details" exact>
