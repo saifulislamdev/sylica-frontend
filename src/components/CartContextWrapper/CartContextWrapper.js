@@ -47,30 +47,43 @@ export const CartContextWrapper = ({ children }) => {
 
   const calculateTotalItemsInCart = () => {
     let totalItem = 0;
-    cart.forEach((product) => {
-      totalItem = totalItem + product.quantity;
-    });
-    return totalItem;
+    try {
+      cart.forEach((product) => {
+        totalItem = totalItem + product.quantity;
+      });
+      return totalItem;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const calculateTotalPriceInCart = () => {
     let totalPrice = 0;
-    cart.forEach((product) => {
-      totalPrice =
-        totalPrice + product.quantity * parseFloat(product.unitPrice);
-    });
-    return totalPrice.toFixed(2);
+    try {
+      cart.forEach((product) => {
+        totalPrice =
+          totalPrice + product.quantity * parseFloat(product.unitPrice);
+      });
+      return totalPrice.toFixed(2);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleAddQuantity = (id, newQuantity) => {
-    let newCart = [...cart];
-    newCart.forEach((product) => {
-      if (product.id === id) {
-        product.quantity = newQuantity;
-      }
-    });
-    setCart(newCart);
+    try {
+      let newCart = [...cart];
+      newCart.forEach((product) => {
+        if (product.id === id) {
+          product.quantity = newQuantity;
+        }
+      });
+      setCart(newCart);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   return (
     <CartContext.Provider
       value={{
