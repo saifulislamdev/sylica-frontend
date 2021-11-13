@@ -37,7 +37,6 @@ export default function ProductListing({
                     <Tag
                         bg={colors.primary}
                         color={colors.neutralWhite}
-                        colorScheme={colors.primary}
                         left='10px'
                         pos='relative'
                         top='50px'
@@ -74,9 +73,8 @@ export default function ProductListing({
             <Button
                 // onClick={} // TODO: implemented later and refactor to avoid repetition
                 isDisabled={isOutOfStock}
-                bg={colors.primary}
                 borderRadius='6px'
-                colorScheme={colors.primary}
+                colorScheme={colors.colorScheme}
                 isFullWidth='true'
                 mb='12px'
                 py='16px'

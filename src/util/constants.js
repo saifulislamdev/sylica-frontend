@@ -1,4 +1,5 @@
 export const colors = {
+    colorScheme: 'teal',
     primary: 'teal.500',
     secondary: 'teal.50',
     neutralGray: 'gray.500',
