@@ -56,7 +56,6 @@ const ProductDetail = ({
                 <Tag
                     bg={colors.primary}
                     color={colors.neutralWhite}
-                    colorScheme={colors.primary}
                     mb='16px'
                     px='16px'
                     variant='subtle'
@@ -119,8 +118,7 @@ const ProductDetail = ({
                 <Button
                     // onClick={} // TODO: implemented later
                     isDisabled={quantity === 0}
-                    bg={colors.primary}
-                    colorScheme={colors.primary}
+                    colorScheme={colors.colorScheme}
                     flexDirection='row'
                     ml='8px'
                     order='3'

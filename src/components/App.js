@@ -8,6 +8,7 @@ import Navbar from './Navbar/Navbar';
 import SignUp from './SignUp/SignUp';
 import ProductDetail from './Product/ProductDetail';
 import ProductDetailImages from './Product/ProductDetailImages';
+import ProductListing from './Product/ProductListing';
 import Specifications from './Product/Specifications';
 
 import '../styles/App.css';
@@ -65,6 +66,15 @@ function App() {
                                         ],
                                     },
                                 ]}
+                            />
+                        </Route>
+                        <Route path='/product/product-listing' exact>
+                            <ProductListing
+                                description='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+                                imageSrc='https://helios-i.mashable.com/imagery/reviews/03y8gbj1mqCuexgXxFJ5vyX/hero-image.fill.size_1248x702.v1623391330.jpg'
+                                price='1'
+                                quantity='20'
+                                title='Product Title'
                             />
                         </Route>
                         <Route path='/product/product-detail-images' exact>
