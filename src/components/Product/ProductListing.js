@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import {
     Box,
     Button,
@@ -12,6 +13,7 @@ import {
 } from '@chakra-ui/react';
 import { BsCartPlus } from 'react-icons/bs';
 
+import { API_BASE_URL } from '../../util/config';
 import { colors } from '../../util/constants';
 
 export default function ProductListing({
@@ -22,17 +24,20 @@ export default function ProductListing({
     quantity,
     title,
 }) {
+    const history = useHistory();
     const isOutOfStock = isNaN(parseInt(quantity)) || parseInt(quantity) === 0;
 
     return (
         <Container
-            // onClick={}
+            onClick={() => history.push(`/products/${id}`)}
             border='1px'
             borderColor={colors.neutralLighterGray}
             borderRadius='12px'
-            w='xs'
+            cursor='pointer'
+            m='16px'
+            w='min(270px, 100vw)'
         >
-            <Box h='xs'>
+            <Box h='min(150px, 100vh)' w='min(240px, 100vw)'>
                 {isOutOfStock && (
                     <Tag
                         bg={colors.primary}
@@ -47,7 +52,7 @@ export default function ProductListing({
                     </Tag>
                 )}
                 <Image
-                    src={imageSrc}
+                    src={`${API_BASE_URL}${imageSrc}`}
                     fallbackSrc='https://via.placeholder.com/150'
                     border='1px'
                     borderColor='transparent'
@@ -55,12 +60,14 @@ export default function ProductListing({
                     fit='fill'
                     loading='lazy'
                     m='auto'
-                    maxH='sm'
-                    mt='12px'
+                    maxH='min(120px, 100vh)'
+                    mt='16px'
                     alt={`Image of ${title}`}
                 ></Image>
             </Box>
-            <Heading size='xs'>{title}</Heading>
+            <Heading mt='16px' size='xs'>
+                {title}
+            </Heading>
             <Text noOfLines='4' size='xs'>
                 {description}
             </Text>

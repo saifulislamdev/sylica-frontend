@@ -78,7 +78,7 @@ export default function ProductDetailImages({ images, maxQuantity }) {
                                 fallbackSrc='https://via.placeholder.com/350'
                                 loading='lazy'
                                 m={totalImages < 20 ? '2px' : '1px'}
-                                w={`${90 / totalImages}%`}
+                                w={`min(75px, ${90 / totalImages}%)`}
                                 alt={image.name}
                             ></Image>
                         );
