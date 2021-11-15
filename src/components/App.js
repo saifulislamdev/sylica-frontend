@@ -9,6 +9,7 @@ import Navbar from "./Navbar/Navbar";
 import SignUp from "./SignUp/SignUp";
 import Product from "../pages/Product";
 import ProductListing from "./Product/ProductListing";
+import Cart from "./Cart/Cart";
 
 import "../styles/App.css";
 
@@ -31,6 +32,9 @@ function App() {
               </Route>
               <Route path='/checkout' exact>
                 <Checkout />
+              </Route>
+              <Route path='/cart' exact>
+                <Cart />
               </Route>
               {/* TODO: remove later (temporary) */}
               <Route path='/product/product-listing' exact>
