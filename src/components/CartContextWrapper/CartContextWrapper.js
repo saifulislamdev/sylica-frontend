@@ -60,9 +60,7 @@ export const CartContextWrapper = ({ children }) => {
       title,
       description,
     };
-    const newCart = [...cart, newProduct];
-    console.log(newCart);
-    setCart(newCart);
+    setCart((cart) => cart.push(newProduct));
   };
 
   const handleRemoveItemFromCart = (id) => {
