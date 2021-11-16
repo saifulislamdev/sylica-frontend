@@ -29,7 +29,7 @@ const CartItem = ({
   const { handleAddQuantity, handleRemoveItemFromCart } =
     useContext(CartContext);
 
-  const HandleQuantityChange = (value) => {
+  const handleQuantityChange = (value) => {
     setQuantity(parseInt(value));
   };
 
@@ -62,7 +62,7 @@ const CartItem = ({
         <NumberInput
           defaultValue={0}
           min={1}
-          onChange={(value) => HandleQuantityChange(value)}
+          onChange={(value) => handleQuantityChange(value)}
           value={quantity}
           size='sm'
         >
