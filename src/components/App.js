@@ -3,13 +3,13 @@ import { Container } from "@chakra-ui/react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { CartContextWrapper } from "./CartContextWrapper/CartContextWrapper";
+import Cart from "./Cart/Cart";
 import Checkout from "./Checkout/Checkout";
 import LogIn from "./LogIn/LogIn";
 import Navbar from "./Navbar/Navbar";
 import SignUp from "./SignUp/SignUp";
 import Product from "../pages/Product";
 import ProductListing from "./Product/ProductListing";
-import Cart from "./Cart/Cart";
 
 import "../styles/App.css";
 
