@@ -17,6 +17,7 @@ import { CartContext } from '../../util/context';
 
 const CartItem = ({
   imageURL,
+  altImage,
   unitPrice,
   title,
   description,
@@ -48,7 +49,7 @@ const CartItem = ({
     >
       <Image
         src={imageURL}
-        alt='image'
+        alt={altImage}
         borderRadius='16px'
         boxSize='150px'
         objectFit='contain'

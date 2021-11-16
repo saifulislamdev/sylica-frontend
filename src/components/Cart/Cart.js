@@ -52,6 +52,7 @@ const Cart = () => {
                     unitPrice={product.unitPrice}
                     itemQuantity={product.quantity}
                     imageURL={product.imageURL}
+                    altImage={product.altImage}
                   />
                 ))}
               </Box>
