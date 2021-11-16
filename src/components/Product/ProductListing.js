@@ -37,7 +37,7 @@ export default function ProductListing({
             m='16px'
             w='min(270px, 100vw)'
         >
-            <Box h='min(150px, 100vh)' w='min(240px, 100vw)'>
+            <Box h='min(140px, 100vh)'>
                 {isOutOfStock && (
                     <Tag
                         bg={colors.primary}
@@ -61,6 +61,7 @@ export default function ProductListing({
                     loading='lazy'
                     m='auto'
                     maxH='min(120px, 100vh)'
+                    maxW='min(220px, 100vw)'
                     mt='16px'
                     alt={`Image of ${title}`}
                 ></Image>
