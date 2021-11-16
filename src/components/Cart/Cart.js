@@ -1,11 +1,5 @@
 import React, { useContext } from 'react';
-import CartItem from './CartItem';
-import { CartContext } from '../../util/context';
-import OrderSummary from '../Checkout/OrderSummary';
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
 import { Link as RouterLink } from 'react-router-dom';
-import { colors } from '../../util/constants';
 import {
   Heading,
   Flex,
@@ -16,6 +10,12 @@ import {
   Text,
   Link,
 } from '@chakra-ui/react';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import CartItem from './CartItem';
+import { CartContext } from '../../util/context';
+import OrderSummary from '../Checkout/OrderSummary';
+import { colors } from '../../util/constants';
 
 const stripePromise = loadStripe(
   'pk_test_51IlQGnEwHOsES7xUluOPPi4TS3wGXqraJVNWZvGMNlEY9HAg0ust8ilDKraQEV5T891nLuYgGoUP1FZAZtMRh5Oi00FpRjnaCu' ??
