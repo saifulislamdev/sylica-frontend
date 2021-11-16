@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
-import { CartContext } from "../../util/context";
+import React, { useState, useEffect, useContext } from 'react';
+import { CartContext } from '../../util/context';
 import {
   Box,
   Flex,
@@ -13,7 +13,7 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 
 const CartItem = ({
   imageURL,

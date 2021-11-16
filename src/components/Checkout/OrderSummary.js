@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Heading,
   VStack,
@@ -7,12 +7,12 @@ import {
   Text,
   Button,
   Divider,
-} from "@chakra-ui/react";
-import { colors } from "../../util/constants";
+} from '@chakra-ui/react';
+import { colors } from '../../util/constants';
 
-import { useStripe, useElements } from "@stripe/react-stripe-js";
-import { Link } from "react-router-dom";
-import { CartContext } from "../../util/context";
+import { useStripe, useElements } from '@stripe/react-stripe-js';
+import { Link } from 'react-router-dom';
+import { CartContext } from '../../util/context';
 
 const OrderSummary = ({ checkout }) => {
   const stripe = useStripe();
@@ -41,7 +41,7 @@ const OrderSummary = ({ checkout }) => {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: "http://localhost:3000/checkout",
+        return_url: 'http://localhost:3000/checkout',
       },
     });
 
@@ -50,10 +50,10 @@ const OrderSummary = ({ checkout }) => {
     // your `return_url`. For some payment methods like iDEAL, your customer will
     // be redirected to an intermediate site first to authorize the payment, then
     // redirected to the `return_url`.
-    if (error.type === "card_error" || error.type === "validation_error") {
+    if (error.type === 'card_error' || error.type === 'validation_error') {
       setMessage(error.message);
     } else {
-      setMessage("An unexpected error occured.");
+      setMessage('An unexpected error occured.');
     }
 
     setIsLoading(false);
@@ -65,7 +65,7 @@ const OrderSummary = ({ checkout }) => {
     }
 
     const clientSecret = new URLSearchParams(window.location.search).get(
-      "payment_intent_client_secret"
+      'payment_intent_client_secret'
     );
 
     if (!clientSecret) {
@@ -74,17 +74,17 @@ const OrderSummary = ({ checkout }) => {
 
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
       switch (paymentIntent.status) {
-        case "succeeded":
-          setMessage("Payment succeeded!");
+        case 'succeeded':
+          setMessage('Payment succeeded!');
           break;
-        case "processing":
-          setMessage("Your payment is processing.");
+        case 'processing':
+          setMessage('Your payment is processing.');
           break;
-        case "requires_payment_method":
-          setMessage("Your payment was not successful, please try again.");
+        case 'requires_payment_method':
+          setMessage('Your payment was not successful, please try again.');
           break;
         default:
-          setMessage("Something went wrong.");
+          setMessage('Something went wrong.');
           break;
       }
     });
@@ -97,8 +97,8 @@ const OrderSummary = ({ checkout }) => {
       spacing={10}
       alignItems='flex-start'
       style={{
-        border: "2px solid #E2E8F0",
-        borderRadius: "25px",
+        border: '2px solid #E2E8F0',
+        borderRadius: '25px',
       }}
     >
       <Heading size='xl'>Order Summary</Heading>
@@ -150,7 +150,7 @@ const OrderSummary = ({ checkout }) => {
                 {isLoading ? (
                   <div className='spinner' id='spinner'></div>
                 ) : (
-                  "Place Order"
+                  'Place Order'
                 )}
               </span>
             </Button>
@@ -160,11 +160,11 @@ const OrderSummary = ({ checkout }) => {
           {message && (
             <div
               style={{
-                color: "rgb(105, 115, 134)",
-                fontSize: "16px",
-                lineHeight: "20px",
-                paddingTop: "12px",
-                textAlign: "center",
+                color: 'rgb(105, 115, 134)',
+                fontSize: '16px',
+                lineHeight: '20px',
+                paddingTop: '12px',
+                textAlign: 'center',
               }}
             >
               {message}
