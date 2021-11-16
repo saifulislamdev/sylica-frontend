@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Heading,
   VStack,
@@ -8,11 +9,9 @@ import {
   Button,
   Divider,
 } from '@chakra-ui/react';
-import { colors } from '../../util/constants';
-
 import { useStripe, useElements } from '@stripe/react-stripe-js';
-import { Link } from 'react-router-dom';
 import { CartContext } from '../../util/context';
+import { colors } from '../../util/constants';
 
 const OrderSummary = ({ checkout }) => {
   const stripe = useStripe();
@@ -107,19 +106,19 @@ const OrderSummary = ({ checkout }) => {
           <Text>{`Items(${calculateTotalItemsInCart()}):`}</Text>
         </GridItem>
         <GridItem colSpan={1}>
-          <Text>{`$ 000.00`}</Text>
+          <Text>{`$${calculateTotalPriceInCart()}`}</Text>
         </GridItem>
         <GridItem colSpan={1}>
           <Text>{`Shipping and handling:`}</Text>
         </GridItem>
         <GridItem colSpan={1}>
-          <Text>{`$ 00.00`}</Text>
+          <Text>{`$00.00`}</Text>
         </GridItem>
         <GridItem colSpan={1}>
           <Text>{`Tax:`}</Text>
         </GridItem>
         <GridItem colSpan={1}>
-          <Text>{`$ 00.00`}</Text>
+          <Text>{`$00.00`}</Text>
         </GridItem>
         <GridItem colSpan={2}>
           <Divider />
@@ -128,7 +127,7 @@ const OrderSummary = ({ checkout }) => {
           <Heading size='l'>Order total:</Heading>
         </GridItem>
         <GridItem colSpan={1}>
-          <Heading size='l'>{`$ 00.00`}</Heading>
+          <Heading size='l'>{`$${calculateTotalPriceInCart()}`}</Heading>
         </GridItem>
         <GridItem colSpan={2}>
           {checkout ? (
