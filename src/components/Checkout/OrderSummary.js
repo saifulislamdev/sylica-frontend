@@ -145,7 +145,7 @@ const OrderSummary = ({ checkout }) => {
               color='white'
               onClick={handleSubmit}
             >
-              <span id='button-text'>
+              <span>
                 {isLoading ? (
                   <div className='spinner' id='spinner'></div>
                 ) : (
