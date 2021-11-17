@@ -5,6 +5,7 @@ import {
     MdOutlineArrowForwardIos,
 } from 'react-icons/md';
 
+import { API_BASE_URL } from '../../util/config';
 import { colors } from '../../util/constants';
 
 export default function ProductDetailImages({ images, maxQuantity }) {
@@ -39,7 +40,7 @@ export default function ProductDetailImages({ images, maxQuantity }) {
                 )}
                 <Box h={['xs', 'md', 'md', 'md', 'md']}>
                     <Image
-                        src={images[currImage].src}
+                        src={`${API_BASE_URL}${images[currImage].src}`}
                         fallbackSrc='https://via.placeholder.com/350'
                         border='1px'
                         borderColor='transparent'
@@ -66,23 +67,19 @@ export default function ProductDetailImages({ images, maxQuantity }) {
                     variant='outline'
                     aria-label='Look at previous image'
                 />
-                <Flex
-                    align='center'
-                    direction='row'
-                    justify='center'
-                    mb='16px'
-                >
+                <Flex align='center' direction='row' justify='center' mb='16px'>
                     {images.map((image, i) => {
                         return (
                             <Image
                                 onClick={() => {
                                     setCurrImage(i);
                                 }}
-                                src={image.src}
+                                src={`${API_BASE_URL}${image.src}`}
                                 fallbackSrc='https://via.placeholder.com/350'
+                                cursor='pointer'
                                 loading='lazy'
                                 m={totalImages < 20 ? '2px' : '1px'}
-                                w={`${90 / totalImages}%`}
+                                w={`min(75px, ${90 / totalImages}%)`}
                                 alt={image.name}
                             ></Image>
                         );
