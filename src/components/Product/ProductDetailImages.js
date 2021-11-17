@@ -76,9 +76,10 @@ export default function ProductDetailImages({ images, maxQuantity }) {
                                 }}
                                 src={`${API_BASE_URL}${image.src}`}
                                 fallbackSrc='https://via.placeholder.com/350'
+                                cursor='pointer'
                                 loading='lazy'
                                 m={totalImages < 20 ? '2px' : '1px'}
-                                w={`${90 / totalImages}%`}
+                                w={`min(75px, ${90 / totalImages}%)`}
                                 alt={image.name}
                             ></Image>
                         );
