@@ -1,16 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Flex, Input, Text } from '@chakra-ui/react';
 import ProductListing from '../components/Product/ProductListing';
+import ProductPagination from '../components/Product/ProductPagination';
 import { axiosInstance } from '../util/config';
 
 export default function Products() {
-    const [products, setProducts] = useState({});
-    const [search, setSearch] = React.useState('');
+    const [products, setProducts] = useState([]);
+    const [search, setSearch] = useState('');
     const [isLoaded, setLoaded] = useState(false);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
-    const handleChange = (e) => setSearch(e.target.value);
+    /* Configuring products on different pages of the products page */
+    const [currPage, setCurrPage] = useState(0);
+    const [productsPerPage, setProductsPerPage] = useState(16);
+    const [pageFirstProductIndex, setPageFirstProductIndex] = useState();
+    const [pageLastProductIndex, setPageLastProductIndex] = useState();
+    const productsPerPageOptions = [0, 4, 8, 16, 24];
+
+    const handleSearchChange = (e) => {
+        setSearch(e.target.value);
+        setProductsPerPage(productsPerPageOptions.at(-1));
+        setCurrPage(0);
+    };
 
     useEffect(() => {
         axiosInstance
@@ -41,7 +53,7 @@ export default function Products() {
         <>
             <Box p='16px'>
                 <Input
-                    onChange={handleChange}
+                    onChange={handleSearchChange}
                     value={search}
                     placeholder='Search Products...'
                     borderRadius='6px'
@@ -56,20 +68,43 @@ export default function Products() {
                 justify={['center', 'center', 'center', 'center', 'flex-start']}
                 wrap='wrap'
             >
-                {products.map((product) => {
-                    if (product.title.toLowerCase().includes(search.toLowerCase()))
+                {products
+                    .filter((product, index) => {
                         return (
-                            <ProductListing
-                                description={product.description}
-                                id={product.id}
-                                imageSrc={product.images[0].src}
-                                price={product.price}
-                                quantity={product.quantity}
-                                title={product.title}
-                            />
+                            pageFirstProductIndex <= index &&
+                            index <= pageLastProductIndex
                         );
-                })}
+                    })
+                    .map((product) => {
+                        if (
+                            product.title
+                                .toLowerCase()
+                                .includes(search.toLowerCase())
+                        )
+                            return (
+                                <ProductListing
+                                    description={product.description}
+                                    id={product.id}
+                                    imageSrc={product.images[0].src}
+                                    price={product.price}
+                                    quantity={product.quantity}
+                                    title={product.title}
+                                />
+                            );
+                    })}
             </Flex>
+            <ProductPagination
+                currPage={currPage}
+                pageFirstProductIndex={pageFirstProductIndex}
+                pageLastProductIndex={pageLastProductIndex}
+                productsPerPage={productsPerPage}
+                productsPerPageOptions={productsPerPageOptions}
+                setCurrPage={setCurrPage}
+                setPageFirstProductIndex={setPageFirstProductIndex}
+                setPageLastProductIndex={setPageLastProductIndex}
+                setProductsPerPage={setProductsPerPage}
+                totalProducts={products.length}
+            />
         </>
     ) : (
         <Text color='red' pl='16px'>
