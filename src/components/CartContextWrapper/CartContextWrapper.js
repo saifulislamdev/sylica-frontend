@@ -42,13 +42,11 @@ export const CartContextWrapper = ({ children }) => {
 
   const handleAddQuantity = (id, newQuantity) => {
     try {
-      let newCart = [...cart];
-      newCart.forEach((product) => {
-        if (product.id === id) {
-          product.quantity = newQuantity;
-        }
-      });
-      setCart(newCart);
+      setCart(
+        cart.map((product) =>
+          product.id === id ? { ...product, quantity: newQuantity } : product
+        )
+      );
     } catch (error) {
       console.log(error);
     }
