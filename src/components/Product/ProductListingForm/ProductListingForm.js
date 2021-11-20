@@ -39,6 +39,11 @@ const CreateProductListingForm = () => {
 		}
 	};
 	return renderCurrentForm();
+	// <VStack w='full' h='full' alignItems='flex-start'>
+	// 	<GeneralProductInfoForm setCurrentForm={setCurrentForm} />;
+	// 	<SpecificationsForm setCurrentForm={setCurrentForm} />;
+	// 	<ProductImageUpload setCurrentForm={setCurrentForm} />;
+	// </VStack>
 };
 
 export default CreateProductListingForm;

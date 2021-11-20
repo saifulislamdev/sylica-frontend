@@ -7,6 +7,7 @@ import {
 	VStack,
 	UnorderedList,
 	ListItem,
+	Text,
 } from '@chakra-ui/react';
 import { GrFormPrevious } from 'react-icons/gr';
 import { IoCreateOutline } from 'react-icons/io5';
@@ -39,7 +40,9 @@ const ProductImageUpload = ({ setCurrentForm }) => {
 				{...getRootProps({ className: 'dropzone' })}
 			>
 				<input {...getInputProps()} />
-				<p>Drag 'n' drop some files here, or click to select files</p>
+				<Text align='center'>
+					Drag 'n' drop some files here, or click to select files
+				</Text>
 			</Flex>
 			<Heading size='sz'>Images</Heading>
 			<UnorderedList pl={4}>{files}</UnorderedList>
