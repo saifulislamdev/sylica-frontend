@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { CartContextWrapper } from './CartContextWrapper/CartContextWrapper';
 import Cart from './Cart/Cart';
 import Checkout from './Checkout/Checkout';
+import Home from '../pages/Home';
 import LogIn from './LogIn/LogIn';
 import Navbar from './Navbar/Navbar';
 import Product from '../pages/Product';
@@ -32,6 +33,9 @@ function App() {
                             </Route>
                             <Route path='/checkout' exact>
                                 <Checkout />
+                            </Route>
+                            <Route path='/home' exact>
+                                <Home />
                             </Route>
                             <Route path='/products' exact>
                                 <Products />

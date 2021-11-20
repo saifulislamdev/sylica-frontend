@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Flex, Input, Text } from '@chakra-ui/react';
-import ProductListing from '../components/Product/ProductListing';
+import React, { useState } from 'react';
+import { Box, Input } from '@chakra-ui/react';
+import Products from '../components/Product/Products';
 import ProductPagination from '../components/Product/ProductPagination';
-import { axiosInstance } from '../util/config';
 
-export default function Products() {
+export default function ProductsPage() {
     const [products, setProducts] = useState([]);
     const [search, setSearch] = useState('');
     const [isLoaded, setLoaded] = useState(false);
@@ -24,32 +23,7 @@ export default function Products() {
         setCurrPage(0);
     };
 
-    useEffect(() => {
-        axiosInstance
-            .get('/products/getProducts')
-            .then((res) => {
-                setProducts(
-                    res.data.products.map((product) => {
-                        // store only what's necessary
-                        return {
-                            description: product.description,
-                            id: product._id,
-                            images: product.images,
-                            price: product.price,
-                            quantity: product.quantity,
-                            title: product.title,
-                        };
-                    })
-                );
-                setLoaded(true);
-            })
-            .catch((err) => {
-                setErrorMessage(err.response.data.msg); // msg is the field for error message from backend
-                setError(true);
-            });
-    }, []);
-
-    return !error && isLoaded && products ? (
+    return (
         <>
             <Box p='16px'>
                 <Input
@@ -63,36 +37,19 @@ export default function Products() {
                     variant='outline'
                 ></Input>
             </Box>
-            <Flex
-                align='center'
-                justify={['center', 'center', 'center', 'center', 'flex-start']}
-                wrap='wrap'
-            >
-                {products
-                    .filter((product, index) => {
-                        return (
-                            pageFirstProductIndex <= index &&
-                            index <= pageLastProductIndex
-                        );
-                    })
-                    .map((product) => {
-                        if (
-                            product.title
-                                .toLowerCase()
-                                .includes(search.toLowerCase())
-                        )
-                            return (
-                                <ProductListing
-                                    description={product.description}
-                                    id={product.id}
-                                    imageSrc={product.images[0].src}
-                                    price={product.price}
-                                    quantity={product.quantity}
-                                    title={product.title}
-                                />
-                            );
-                    })}
-            </Flex>
+            <Products
+                error={error}
+                isLoaded={isLoaded}
+                pageFirstProductIndex={pageFirstProductIndex}
+                pageLastProductIndex={pageLastProductIndex}
+                products={products}
+                search={search}
+                setError={setError}
+                setErrorMessage={setErrorMessage}
+                setLoaded={setLoaded}
+                setProducts={setProducts}
+                setProductsPerPage={setProductsPerPage}
+            />
             <ProductPagination
                 currPage={currPage}
                 pageFirstProductIndex={pageFirstProductIndex}
@@ -106,9 +63,5 @@ export default function Products() {
                 totalProducts={products.length}
             />
         </>
-    ) : (
-        <Text color='red' pl='16px'>
-            {errorMessage}
-        </Text>
     );
 }
