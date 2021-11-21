@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
-import { Box, Flex } from '@chakra-ui/react';
+import { Flex, SimpleGrid, Skeleton, Text } from '@chakra-ui/react';
 import ProductListing from './ProductListing';
 import { axiosInstance } from '../../util/config';
 
 export default function Products({
     error,
+    errorMessage,
     isLoaded,
     pageFirstProductIndex,
     pageLastProductIndex,
@@ -14,7 +15,7 @@ export default function Products({
     setErrorMessage,
     setLoaded,
     setProducts,
-    setProductsPerPage
+    setProductsPerPage,
 }) {
     useEffect(() => {
         axiosInstance
@@ -42,38 +43,50 @@ export default function Products({
             });
     }, []);
 
-    return !error && isLoaded && products ? (
-        <Flex
-            align='center'
-            justify={['center', 'center', 'center', 'center', 'flex-start']}
-            wrap='wrap'
-        >
-            {products
-                .filter((product, index) => {
-                    return (
-                        pageFirstProductIndex <= index &&
-                        index <= pageLastProductIndex
-                    );
-                })
-                .map((product) => {
-                    if (
-                        product.title
-                            .toLowerCase()
-                            .includes(search.toLowerCase())
-                    )
+    return !error ? (
+        isLoaded ? (
+            <Flex
+                align='center'
+                justify={['center', 'center', 'center', 'center', 'flex-start']}
+                wrap='wrap'
+            >
+                {products
+                    .filter((product, index) => {
                         return (
-                            <ProductListing
-                                description={product.description}
-                                id={product.id}
-                                imageSrc={product.images[0].src}
-                                price={product.price}
-                                quantity={product.quantity}
-                                title={product.title}
-                            />
+                            pageFirstProductIndex <= index &&
+                            index <= pageLastProductIndex
                         );
-                })}
-        </Flex>
+                    })
+                    .map((product) => {
+                        if (
+                            product.title
+                                .toLowerCase()
+                                .includes(search.toLowerCase())
+                        )
+                            return (
+                                <ProductListing
+                                    description={product.description}
+                                    id={product.id}
+                                    imageSrc={product.images[0].src}
+                                    price={product.price}
+                                    quantity={product.quantity}
+                                    title={product.title}
+                                />
+                            );
+                    })}
+            </Flex>
+        ) : (
+            <SimpleGrid columns={4} gap={6} mt='16px'>
+                {Array(8)
+                    .fill(4)
+                    .map((x) => (
+                        <Skeleton h='420px' w='full' borderRadius={6} />
+                    ))}
+            </SimpleGrid>
+        )
     ) : (
-        <Box></Box>
+        <Text color='red' pl='16px'>
+            {errorMessage}
+        </Text>
     );
 }

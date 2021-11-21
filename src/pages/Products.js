@@ -39,6 +39,7 @@ export default function ProductsPage() {
             </Box>
             <Products
                 error={error}
+                errorMessage={errorMessage}
                 isLoaded={isLoaded}
                 pageFirstProductIndex={pageFirstProductIndex}
                 pageLastProductIndex={pageLastProductIndex}
