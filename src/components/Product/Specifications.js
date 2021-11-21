@@ -17,13 +17,7 @@ const Specifications = ({ specifications }) => {
                                     return (
                                         <Tr>
                                             <Td w='50%'>{row[0]}</Td>
-                                            {!isNaN(+row[1]) ? (
-                                                <Td isNumeric w='50%'>
-                                                    {row[1]}
-                                                </Td>
-                                            ) : (
-                                                <Td w='50%'>{row[1]}</Td>
-                                            )}
+                                            <Td w='50%'>{row[1]}</Td>
                                         </Tr>
                                     );
                                 })}
