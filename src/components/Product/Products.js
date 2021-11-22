@@ -6,6 +6,8 @@ import { axiosInstance } from '../../util/config';
 export default function Products({
     error,
     errorMessage,
+    homePageProductIds,
+    isForHomePage,
     isLoaded,
     pageFirstProductIndex,
     pageLastProductIndex,
@@ -51,6 +53,11 @@ export default function Products({
                 wrap='wrap'
             >
                 {products
+                    .filter((product, index) => { // filter products if for home page
+                        return !isForHomePage
+                            ? true // for any page besides /home
+                            : homePageProductIds.get(product.id); // if for /home page, check if product is a home page product
+                    })
                     .filter((product, index) => {
                         return (
                             pageFirstProductIndex <= index &&

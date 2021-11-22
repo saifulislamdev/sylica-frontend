@@ -8,21 +8,32 @@ export default function Home() {
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
+    const productIds = new Map([
+        ['61908195cdec62705404cdd9', true],
+        ['619082bbab9b070b7aa427e2', true],
+        ['619085efc7ba276cc9296d2f', true],
+        ['619933f8df17017d85561842', true],
+    ]);
+
     return (
         <>
-            <Heading m='16px' size='xl'>Discover</Heading>
+            <Heading m='16px' size='xl'>
+                Discover
+            </Heading>
             <Products
                 error={error}
+                homePageProductIds={productIds}
+                isForHomePage={true}
                 isLoaded={isLoaded}
                 pageFirstProductIndex={0}
-                pageLastProductIndex={products.length - 1}
+                pageLastProductIndex={productIds.size - 1}
                 products={products}
                 search={''}
                 setError={setError}
                 setErrorMessage={setErrorMessage}
                 setLoaded={setLoaded}
                 setProducts={setProducts}
-                setProductsPerPage={products.length - 1}
+                setProductsPerPage={() => {}}
             />
         </>
     );
