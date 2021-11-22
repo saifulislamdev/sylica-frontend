@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Heading } from '@chakra-ui/react';
+import Carousel from '../components/Product/Carousel';
 import Products from '../components/Product/Products';
 
 export default function Home() {
@@ -10,7 +11,10 @@ export default function Home() {
 
     return (
         <>
-            <Heading m='16px' size='xl'>Discover</Heading>
+            <Carousel />
+            <Heading m='32px 0px 16px 16px' size='xl'>
+                Discover
+            </Heading>
             <Products
                 error={error}
                 isLoaded={isLoaded}
