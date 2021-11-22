@@ -4,10 +4,8 @@ import {
     Box,
     Button,
     Container,
-    Flex,
     Heading,
     IconButton,
-    Spacer,
     Text,
 } from '@chakra-ui/react';
 import {
@@ -19,32 +17,32 @@ import { colors } from '../../util/constants';
 import appleiPhone13Pro from '../../assets/carousel/619085efc7ba276cc9296d2f.jpeg';
 import appleMacBookPro from '../../assets/carousel/61908195cdec62705404cdd9.jpeg';
 import microsoftSurfaceStudioLaptop from '../../assets/carousel/619082bbab9b070b7aa427e2.jpeg';
-import nvidiaGeForceRTX3090 from '../../assets/carousel/619082bbab9b070b7aa427e2.jpeg';
+import nvidiaGeForceRTX3090 from '../../assets/carousel/619933f8df17017d85561842.jpeg';
 
 const products = [
     {
         id: '61908195cdec62705404cdd9',
         img: appleMacBookPro,
-        title: 'Apple MacBook Pro with M1 Pro or M1 Max',
-        textColor: '#4D79AB',
+        title: [['Apple MacBook Pro'], ['with M1 Pro or M1 Max']],
+        color: '#4D79AB',
     },
     {
         id: '619082bbab9b070b7aa427e2',
         img: microsoftSurfaceStudioLaptop,
-        title: 'Microsoft Surface Studio Laptop',
-        textColor: '#4B87BC',
+        title: [['Microsoft Surface'], ['Studio Laptop']],
+        color: '#4B87BC',
     },
     {
         id: '619085efc7ba276cc9296d2f',
         img: appleiPhone13Pro,
-        title: 'Apple iPhone 13 Pro',
-        textColor: '#00538B',
+        title: [['Apple'], ['iPhone 13 Pro']],
+        color: '#00538B',
     },
     {
         id: '619933f8df17017d85561842',
         img: nvidiaGeForceRTX3090,
-        title: 'Nvidia GeForce RTX 3090',
-        textColor: '#33323D',
+        title: [['Nvidia GeForce'], ['RTX 3090']],
+        color: '#33323D',
     },
 ];
 
@@ -52,13 +50,17 @@ export default function Carousel() {
     const [currProduct, setCurrProduct] = useState(0);
     const history = useHistory();
 
+    const viewNextProduct = () => {
+        setCurrProduct(currProduct < products.length - 1 ? currProduct + 1 : 0);
+    };
+
     const product = products[currProduct];
 
     return (
         <>
             <Container
-                bgColor={colors.primary} // in case there is an issue with the image
-                bgImage={appleMacBookPro}
+                bgColor={product.color}
+                bgImage={product.img}
                 bgSize='auto 512px'
                 bgPosition='center'
                 bgRepeat='no-repeat'
@@ -72,12 +74,17 @@ export default function Carousel() {
                         position='relative'
                         left='48px'
                         top='100px'
-                        // maxW='container.lg'
+                        maxW='container.lg'
                     >
-                        <Heading color={colors.neutralWhite} size='3xl'>
-                            Apple MacBook Pro
-                            <br />
-                            with M1 Pro or M1 Max
+                        <Heading
+                            color={colors.neutralWhite}
+                            size='3xl'
+                            whiteSpace='pre-line'
+                        >
+                            {product.title.reduce(
+                                (prevText, currText) =>
+                                    prevText + '\n' + currText
+                            )}
                         </Heading>
                         <Button
                             onClick={() =>
@@ -94,7 +101,7 @@ export default function Carousel() {
                         >
                             <Text
                                 align='center'
-                                color={products.textColor}
+                                color={products.color}
                                 size='sm'
                             >
                                 Buy Now
@@ -141,6 +148,7 @@ export default function Carousel() {
                                 }}
                                 icon={<MdOutlineArrowBackIosNew />}
                                 borderRadius='6px'
+                                colorScheme={colors.colorSchemeTransparent}
                                 isDisabled={products.length < 2}
                                 isRound='false'
                                 size='md'
@@ -148,17 +156,16 @@ export default function Carousel() {
                                 aria-label='View previous product in carousel'
                             ></IconButton>
                         </Box>
-                        <Box position='absolute' left='calc(100% - 40px)' top='0'>
+                        <Box
+                            position='absolute'
+                            left='calc(100% - 40px)'
+                            top='0'
+                        >
                             <IconButton
-                                onClick={() => {
-                                    setCurrProduct(
-                                        currProduct < products.length - 1
-                                            ? currProduct + 1
-                                            : 0
-                                    );
-                                }}
+                                onClick={viewNextProduct}
                                 icon={<MdOutlineArrowForwardIos />}
                                 borderRadius='6px'
+                                colorScheme={colors.colorSchemeTransparent}
                                 isDisabled={products.length < 2}
                                 isRound='false'
                                 size='md'
