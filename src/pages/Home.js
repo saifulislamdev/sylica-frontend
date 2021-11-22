@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import { Heading } from '@chakra-ui/react';
+import { useHistory } from 'react-router';
+import { Button, Container, Heading } from '@chakra-ui/react';
 import Products from '../components/Product/Products';
+import { colors } from '../util/constants';
 
 export default function Home() {
     const [products, setProducts] = useState([]);
     const [isLoaded, setLoaded] = useState(false);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+
+    const history = useHistory();
 
     const productIds = new Map([
         ['61908195cdec62705404cdd9', true],
@@ -35,6 +39,17 @@ export default function Home() {
                 setProducts={setProducts}
                 setProductsPerPage={() => {}}
             />
+            <Container centerContent maxW='full'>
+                <Button
+                    onClick={() => history.push('/products/')}
+                    borderRadius='6px'
+                    colorScheme={colors.colorScheme}
+                    isFullWidth={true}
+                    m='16px'
+                >
+                    Browse all products
+                </Button>
+            </Container>
         </>
     );
 }

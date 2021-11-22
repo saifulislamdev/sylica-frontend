@@ -35,7 +35,7 @@ export default function ProductListing({
             borderRadius='12px'
             cursor='pointer'
             m='16px'
-            w='min(270px, 100vw)'
+            w='min(288px, 100vw)'
         >
             <Box h='min(140px, 100vh)'>
                 {isOutOfStock && (
