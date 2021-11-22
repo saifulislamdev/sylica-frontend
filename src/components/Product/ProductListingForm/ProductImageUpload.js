@@ -7,9 +7,12 @@ import {
 	VStack,
 	UnorderedList,
 	ListItem,
+	Icon,
+	Text,
 } from '@chakra-ui/react';
 import { GrFormPrevious } from 'react-icons/gr';
 import { IoCreateOutline } from 'react-icons/io5';
+import { AiOutlineCloudUpload } from 'react-icons/ai';
 
 import { colors, currentCreateProductForm } from '../../../util/constants';
 
@@ -34,12 +37,18 @@ const ProductImageUpload = ({ setCurrentForm }) => {
 				alignItems='center'
 				justifyContent='center'
 				w='full'
-				height='132px'
+				height='152px'
 				className='container'
+				direction='column'
 				{...getRootProps({ className: 'dropzone' })}
+				cursor='pointer'
 			>
 				<input {...getInputProps()} />
-				<p>Drag 'n' drop some files here, or click to select files</p>
+				<Icon as={AiOutlineCloudUpload} />
+				<Text fontWeight='bold' mb={4}>
+					Upload images
+				</Text>
+				<Text>Drag 'n' drop some files here, or click to select files</Text>
 			</Flex>
 			<Heading size='sz'>Images</Heading>
 			<UnorderedList pl={4}>{files}</UnorderedList>
