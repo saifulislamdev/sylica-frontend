@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
     Box,
@@ -23,8 +23,8 @@ const products = [
     {
         id: '61908195cdec62705404cdd9',
         img: appleMacBookPro,
-        title: [['Apple MacBook Pro'], ['with M1 Pro or M1 Max']],
-        color: '#4D79AB',
+        title: [['Apple MacBook Pro'], ['with M1 Pro or M1 Max']], // every subarray represents a new line
+        color: '#4D79AB', // color of text in "Buy Now" and bg color until img load
     },
     {
         id: '619082bbab9b070b7aa427e2',
@@ -48,11 +48,33 @@ const products = [
 
 export default function Carousel() {
     const [currProduct, setCurrProduct] = useState(0);
+    const currProductRef = useRef(currProduct);
+    currProductRef.current = currProduct;
     const history = useHistory();
 
-    const viewNextProduct = () => {
-        setCurrProduct(currProduct < products.length - 1 ? currProduct + 1 : 0);
+    const viewPrevProduct = () => {
+        setCurrProduct(
+            currProductRef.current > 0
+                ? currProductRef.current - 1
+                : products.length - 1
+        );
     };
+    const viewNextProduct = () => {
+        setCurrProduct(
+            currProductRef.current < products.length - 1
+                ? currProductRef.current + 1
+                : 0
+        );
+    };
+
+    useEffect(() => {
+        const updateProductInCarousel = setInterval(() => {
+            viewNextProduct();
+        }, 5000);
+        return () => {
+            clearInterval(updateProductInCarousel);
+        };
+    }, []);
 
     const product = products[currProduct];
 
@@ -71,8 +93,8 @@ export default function Carousel() {
             >
                 <Box>
                     <Box
-                        position='relative'
                         left='48px'
+                        position='relative'
                         top='100px'
                         maxW='container.lg'
                     >
@@ -137,18 +159,12 @@ export default function Carousel() {
                         </Button>
                     </Box>
                     <Box position='relative' top='50%'>
-                        <Box position='absolute' left='0'>
+                        <Box left='0' position='absolute'>
                             <IconButton
-                                onClick={() => {
-                                    setCurrProduct(
-                                        currProduct > 0
-                                            ? currProduct - 1
-                                            : products.length - 1
-                                    );
-                                }}
-                                icon={<MdOutlineArrowBackIosNew />}
+                                onClick={viewPrevProduct}
                                 borderRadius='6px'
                                 colorScheme={colors.colorSchemeTransparent}
+                                icon={<MdOutlineArrowBackIosNew />}
                                 isDisabled={products.length < 2}
                                 isRound='false'
                                 size='md'
@@ -157,15 +173,15 @@ export default function Carousel() {
                             ></IconButton>
                         </Box>
                         <Box
-                            position='absolute'
                             left='calc(100% - 40px)'
+                            position='absolute'
                             top='0'
                         >
                             <IconButton
                                 onClick={viewNextProduct}
-                                icon={<MdOutlineArrowForwardIos />}
                                 borderRadius='6px'
                                 colorScheme={colors.colorSchemeTransparent}
+                                icon={<MdOutlineArrowForwardIos />}
                                 isDisabled={products.length < 2}
                                 isRound='false'
                                 size='md'
