@@ -55,8 +55,8 @@ export default function Products({
                 {products
                     .filter((product, index) => { // filter products if for home page
                         return !isForHomePage
-                            ? true // for any page besides /home
-                            : homePageProductIds.get(product.id); // if for /home page, check if product is a home page product
+                            ? true // for any page besides home page
+                            : homePageProductIds.get(product.id); // if for home page, check if product is a home page product
                     })
                     .filter((product, index) => {
                         return (
