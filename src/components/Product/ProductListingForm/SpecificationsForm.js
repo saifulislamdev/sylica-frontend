@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
-import { Button, SimpleGrid, VStack, HStack, Heading } from '@chakra-ui/react';
+import { Button, VStack, HStack, Heading } from '@chakra-ui/react';
 import SpecificationsTable from './SpecificationsTable';
 import { colors, currentCreateProductForm } from '../../../util/constants';
 
 import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
 
 const SpecificationsForm = ({ setCurrentForm }) => {
-	const [tableData, setTableData] = useState([]);
-	const [tables, setTables] = useState([<SpecificationsTable />]);
+	const [tables, setTables] = useState([<SpecificationsTable tableId={0} />]);
 
 	const onAddTableClick = (e) => {
-		setTables([...tables, <SpecificationsTable />]);
+		setTables([...tables, <SpecificationsTable tableId={tables.length} />]);
 	};
 
 	return (

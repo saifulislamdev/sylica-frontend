@@ -1,24 +1,16 @@
 import React, { useState } from 'react';
-import {
-	Button,
-	SimpleGrid,
-	GridItem,
-	VStack,
-	Divider,
-} from '@chakra-ui/react';
+import { Button, Divider, SimpleGrid } from '@chakra-ui/react';
 import SpecificationsRow from './SpecifactionsRow';
 
-const SpecificationsTable = () => {
-	const [tableTable, setTableTable] = useState({
-		heading: '',
-		rows: [],
-	});
+const SpecificationsTable = ({ tableId }) => {
+	const [specificationTablesData, setSpecificationTablesData] = useState([]);
 
 	const [rows, setRows] = useState([
 		<SpecificationsRow
 			formLabel='Row 1'
 			formHelperText='Specification row: key-value pair separated by comma'
 			placeholder='CPU, Intel i9-1100k'
+			rowId={0}
 		/>,
 	]);
 
@@ -29,6 +21,7 @@ const SpecificationsTable = () => {
 				formLabel={`Row ${rows.length + 1}`}
 				formHelperText='Specification row: key-value pair separated by comma'
 				placeholder='CPU, Intel i9-1100k'
+				rowId={rows.length}
 			/>,
 		]);
 	};
