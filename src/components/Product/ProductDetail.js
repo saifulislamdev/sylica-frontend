@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
     Button,
     Container,
@@ -19,34 +20,42 @@ import {
 } from 'react-icons/md';
 
 import { colors } from '../../util/constants';
+import { CartContext } from '../../util/context';
+import { addToCartOrIncrementQuantity } from '../../util/helpers';
 
-const ProductDetail = ({
-    productTitle,
-    productDescription,
+export default function ProductDetail({
+    id,
+    imageSrc,
+    title,
+    description,
     price,
     maxQuantity,
-}) => {
+}) {
     // if proper number not passed in for maxQuantity or it is actually out of stock
     const isOutOfStock =
         isNaN(parseInt(maxQuantity)) || parseInt(maxQuantity) === 0;
 
     const [quantity, setQuantity] = useState(isOutOfStock ? 0 : 1);
+    const { cart, handleAddQuantity, handleAddToCart } =
+        useContext(CartContext);
+    const { history } = useHistory();
 
     const handleChange = (e) => {
         if (e === '') setQuantity(0); // empty input
         const passedInQuantity = parseInt(e);
         if (isNaN(passedInQuantity)) return; // invalid characters passed in (e.g. letters)
-        const isWithinRange = 0 <= passedInQuantity && passedInQuantity <= parseInt(maxQuantity); // within maximum quantity bound
+        const isWithinRange =
+            0 <= passedInQuantity && passedInQuantity <= parseInt(maxQuantity); // within maximum quantity bound
         if (isWithinRange) setQuantity(passedInQuantity);
-    }
+    };
 
     return (
         <Container>
             <Heading mb='16px' size='lg'>
-                {productTitle}
+                {title}
             </Heading>
             <Text mb='32px' size='xs'>
-                {productDescription}
+                {description}
             </Text>
             <Text color={colors.neutralGray} fontSize='xs'>
                 Price
@@ -116,7 +125,18 @@ const ProductDetail = ({
                     aria-label='Increase quantity by 1'
                 />
                 <Button
-                    // onClick={} // TODO: implemented later
+                    onClick={() => {
+                        addToCartOrIncrementQuantity(
+                            handleAddQuantity,
+                            cart,
+                            handleAddToCart,
+                            id,
+                            imageSrc,
+                            description,
+                            title,
+                            price
+                        );
+                    }}
                     isDisabled={quantity === 0}
                     colorScheme={colors.colorScheme}
                     flexDirection='row'
@@ -136,7 +156,19 @@ const ProductDetail = ({
                 </Button>
             </Flex>
             <Button
-                // onClick={} // TODO: implemented later
+                onClick={() => {
+                    addToCartOrIncrementQuantity(
+                        handleAddQuantity,
+                        cart,
+                        handleAddToCart,
+                        id,
+                        imageSrc,
+                        description,
+                        title,
+                        price
+                    );
+                    history.push('/cart');
+                }}
                 isDisabled={quantity === 0}
                 isFullWidth={true}
                 borderColor={colors.primary}
@@ -148,6 +180,4 @@ const ProductDetail = ({
             </Button>
         </Container>
     );
-};
-
-export default ProductDetail;
+}
