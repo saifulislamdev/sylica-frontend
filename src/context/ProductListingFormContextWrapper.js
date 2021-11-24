@@ -2,20 +2,71 @@ import React, { useState } from 'react';
 import { ProductListingFormContext } from '../util/context';
 
 export const ProductListingFormContextWrapper = ({ children }) => {
-	const [productListing, setProductListing] = useState({
-		generalInfo: {},
-		specifications: [],
-		images: [],
+	const [generalInfo, setGeneralInfo] = useState({
+		title: '',
+		vendor: '',
+		description: '',
+		price: '',
+		quantity: '',
+		categories: [],
+		subCategories: [],
 	});
+	const [specificationTables, setSpecificationTables] = useState([
+		{ heading: '', rows: [] },
+	]);
+	const [images, setImages] = useState([]);
 
-	const updateGeneralInfo = (generalInfo) =>
-		setProductListing({ ...productListing, generalInfo });
+	const updateGeneralInfoText = (e) =>
+		setGeneralInfo({
+			...generalInfo,
+			[e.target.name]: e.target.value,
+		});
 
+	const updateGeneralInfoArray = (e) =>
+		setGeneralInfo({
+			...generalInfo,
+			[e.target.name]: e.target.value.split(',').map((val) => val.trim()),
+		});
+
+	const appendTableDataObject = () =>
+		setSpecificationTables(...specificationTables, [{ heading: '', rows: [] }]);
+
+	const appenRowDataObject = (tableId) =>
+		setSpecificationTables(
+			specificationTables.map((table, index) =>
+				tableId === index ? { ...table, rows: [...table.rows, []] } : table
+			)
+		);
+
+	const updateSpecificationsRow = (e, tableId, rowId) => {
+		const newTable = specificationTables[tableId];
+
+		if (rowId === 0) {
+			newTable.heading = e.target.value; // 0th row is heading row, so update heading
+		} else {
+			newTable.rows[rowId] = e.target.split(',').map((val) => val.trim()); // else split the string and store in rows array
+		}
+
+		setSpecificationTables(
+			specificationTables.map((table, index) =>
+				index === tableId ? newTable : table
+			)
+		);
+	};
+
+	const updateImages = (imgs) => setImages([...images, ...imgs]);
 	return (
 		<ProductListingFormContext.Provider
 			value={{
-				productListing,
-				updateGeneralInfo,
+				updateGeneralInfoText,
+				updateGeneralInfoArray,
+				appendTableDataObject,
+				appenRowDataObject,
+				updateSpecificationsRow,
+				updateImages,
+				generalInfo,
+				specificationTables,
+				images,
 			}}
 		>
 			{children}

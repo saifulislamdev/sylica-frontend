@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 
 import {
 	GridItem,
@@ -7,37 +7,25 @@ import {
 	FormHelperText,
 	Input,
 } from '@chakra-ui/react';
+import { ProductListingFormContext } from '../../../util/context';
 
 const SpecifactionsRow = ({
 	formLabel,
 	formHelperText,
 	placeholder,
+	tableId,
 	rowId,
 }) => {
-	const [tableData, setTableData] = useState({
-		heading: '',
-		rows: [],
-	});
-	const onChangeRowInput = (e) => {
-		rowId === 0
-			? setTableData({ ...tableData, heading: e.target.value }) // first row is heading so update the heading field
-			: setTableData({
-					...tableData,
-					rows: tableData.rows.map((row, index) =>
-						// find the index of the target row and update that row in the array
-						index === e.target.rowId
-							? e.target.value.split(',').map((val) => val.trim())
-							: row
-					),
-			  });
-	};
+	const { updateSpecificationsRow } = useContext(ProductListingFormContext);
 	return (
 		<GridItem colSpan={1}>
 			<FormControl>
 				<FormLabel>{formLabel}</FormLabel>
 				<Input
 					placeholder={placeholder}
-					onChange={onChangeRowInput}
+					onChange={(e) => {
+						updateSpecificationsRow(e, tableId, rowId);
+					}}
 					rowId={rowId}
 				/>
 				{formHelperText && <FormHelperText>{formHelperText}</FormHelperText>}

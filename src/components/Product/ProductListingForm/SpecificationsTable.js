@@ -1,20 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Button, Divider, SimpleGrid } from '@chakra-ui/react';
 import SpecificationsRow from './SpecifactionsRow';
+import { ProductListingFormContext } from '../../../util/context';
 
 const SpecificationsTable = ({ tableId }) => {
-	const [specificationTablesData, setSpecificationTablesData] = useState([]);
-
+	const { appendRowDataObject } = useContext(ProductListingFormContext);
 	const [rows, setRows] = useState([
 		<SpecificationsRow
 			formLabel='Row 1'
 			formHelperText='Specification row: key-value pair separated by comma'
 			placeholder='CPU, Intel i9-1100k'
 			rowId={0}
+			tableId={tableId}
 		/>,
 	]);
 
 	const onClickAddRow = (e) => {
+		appendRowDataObject(tableId); // appends an empty array in specificationsTables[tableId].rows
 		setRows([
 			...rows,
 			<SpecificationsRow
@@ -22,6 +24,7 @@ const SpecificationsTable = ({ tableId }) => {
 				formHelperText='Specification row: key-value pair separated by comma'
 				placeholder='CPU, Intel i9-1100k'
 				rowId={rows.length}
+				tableId={tableId}
 			/>,
 		]);
 	};

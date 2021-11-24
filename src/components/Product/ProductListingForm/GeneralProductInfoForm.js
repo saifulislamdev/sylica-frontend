@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import {
 	Button,
 	SimpleGrid,
@@ -16,26 +16,9 @@ import { colors, currentCreateProductForm } from '../../../util/constants';
 import { ProductListingFormContext } from '../../../util/context';
 
 const GeneralProductInfoForm = ({ setCurrentForm }) => {
-	const [generalInfo, setGeneralInfo] = useState({
-		title: '',
-		vendor: '',
-		description: '',
-		price: '',
-		quantity: '',
-		categories: [],
-		subCategories: [],
-	});
-
-	const { updateGeneralInfo } = useContext(ProductListingFormContext);
-
-	const onChangeText = (e) =>
-		setGeneralInfo({ ...generalInfo, [e.target.name]: e.target.value });
-
-	const onChangeArrayInput = (e) =>
-		setGeneralInfo({
-			...generalInfo,
-			[e.target.name]: e.target.value.split(',').map((val) => val.trim()),
-		});
+	const { updateGeneralInfoText, updateGeneralInfoArray } = useContext(
+		ProductListingFormContext
+	);
 
 	return (
 		<VStack w='full' h='full' p={6} spacing={6} alignItems='flex-start'>
@@ -49,7 +32,7 @@ const GeneralProductInfoForm = ({ setCurrentForm }) => {
 							placeholder='Product Title'
 							type='text'
 							name='title'
-							onChange={onChangeText}
+							onChange={updateGeneralInfoText}
 						/>
 					</FormControl>
 				</GridItem>
@@ -62,7 +45,7 @@ const GeneralProductInfoForm = ({ setCurrentForm }) => {
 							placeholder='Vendor'
 							type='text'
 							name='vendor'
-							onChange={onChangeText}
+							onChange={updateGeneralInfoText}
 						/>
 					</FormControl>
 				</GridItem>
@@ -74,7 +57,7 @@ const GeneralProductInfoForm = ({ setCurrentForm }) => {
 							id='description'
 							placeholder='description'
 							name='description'
-							onChange={onChangeText}
+							onChange={updateGeneralInfoText}
 						/>
 					</FormControl>
 				</GridItem>
@@ -87,7 +70,7 @@ const GeneralProductInfoForm = ({ setCurrentForm }) => {
 							placeholder='000.00'
 							type='text'
 							name='price'
-							onChange={onChangeText}
+							onChange={updateGeneralInfoText}
 						/>
 					</FormControl>
 				</GridItem>
@@ -100,7 +83,7 @@ const GeneralProductInfoForm = ({ setCurrentForm }) => {
 							placeholder='1'
 							type='text'
 							name='quantity'
-							onChange={onChangeText}
+							onChange={updateGeneralInfoText}
 						/>
 					</FormControl>
 				</GridItem>
@@ -112,7 +95,7 @@ const GeneralProductInfoForm = ({ setCurrentForm }) => {
 							id='categories'
 							placeholder='category1, category2,...'
 							name='categories'
-							onChange={onChangeArrayInput}
+							onChange={updateGeneralInfoArray}
 						/>
 						<FormHelperText>
 							List of categories product belong to separated by commas
@@ -127,7 +110,7 @@ const GeneralProductInfoForm = ({ setCurrentForm }) => {
 							id='subCategories'
 							placeholder='sub-category1, sub-category2,...'
 							name='subCategories'
-							onChange={onChangeArrayInput}
+							onChange={updateGeneralInfoArray}
 						/>
 						<FormHelperText>
 							List of sub-categories product belong to separated by commas
@@ -142,7 +125,6 @@ const GeneralProductInfoForm = ({ setCurrentForm }) => {
 				variant='outline'
 				size='sm'
 				onClick={() => {
-					updateGeneralInfo(generalInfo);
 					setCurrentForm(currentCreateProductForm.specifications);
 				}}
 			>
