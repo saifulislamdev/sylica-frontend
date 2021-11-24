@@ -12,7 +12,7 @@ export const ProductListingFormContextWrapper = ({ children }) => {
 		subCategories: [],
 	});
 	const [specificationTables, setSpecificationTables] = useState([
-		{ heading: '', rows: [] },
+		{ heading: '', rows: [[]] },
 	]);
 	const [images, setImages] = useState([]);
 
@@ -29,9 +29,12 @@ export const ProductListingFormContextWrapper = ({ children }) => {
 		});
 
 	const appendTableDataObject = () =>
-		setSpecificationTables(...specificationTables, [{ heading: '', rows: [] }]);
+		setSpecificationTables([
+			...specificationTables,
+			{ heading: '', rows: [[]] },
+		]);
 
-	const appenRowDataObject = (tableId) =>
+	const appendRowDataObject = (tableId) =>
 		setSpecificationTables(
 			specificationTables.map((table, index) =>
 				tableId === index ? { ...table, rows: [...table.rows, []] } : table
@@ -41,10 +44,10 @@ export const ProductListingFormContextWrapper = ({ children }) => {
 	const updateSpecificationsRow = (e, tableId, rowId) => {
 		const newTable = specificationTables[tableId];
 
-		if (rowId === 0) {
+		if (rowId === 'heading') {
 			newTable.heading = e.target.value; // 0th row is heading row, so update heading
 		} else {
-			newTable.rows[rowId] = e.target.split(',').map((val) => val.trim()); // else split the string and store in rows array
+			newTable.rows[rowId] = e.target.value.split(',').map((val) => val.trim()); // else split the string and store in rows array
 		}
 
 		setSpecificationTables(
@@ -61,7 +64,7 @@ export const ProductListingFormContextWrapper = ({ children }) => {
 				updateGeneralInfoText,
 				updateGeneralInfoArray,
 				appendTableDataObject,
-				appenRowDataObject,
+				appendRowDataObject,
 				updateSpecificationsRow,
 				updateImages,
 				generalInfo,

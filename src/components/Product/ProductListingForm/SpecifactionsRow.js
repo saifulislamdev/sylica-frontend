@@ -16,7 +16,9 @@ const SpecifactionsRow = ({
 	tableId,
 	rowId,
 }) => {
-	const { updateSpecificationsRow } = useContext(ProductListingFormContext);
+	const { updateSpecificationsRow, specificationTables } = useContext(
+		ProductListingFormContext
+	);
 	return (
 		<GridItem colSpan={1}>
 			<FormControl>
@@ -27,6 +29,7 @@ const SpecifactionsRow = ({
 						updateSpecificationsRow(e, tableId, rowId);
 					}}
 					rowId={rowId}
+					value={specificationTables[tableId].rows[rowId]}
 				/>
 				{formHelperText && <FormHelperText>{formHelperText}</FormHelperText>}
 			</FormControl>

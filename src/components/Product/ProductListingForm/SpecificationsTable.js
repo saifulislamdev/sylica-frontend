@@ -30,7 +30,12 @@ const SpecificationsTable = ({ tableId }) => {
 	};
 	return (
 		<SimpleGrid columns={1} rowGap={6} columnGap={6} w='full'>
-			<SpecificationsRow formLabel='Heading' placeholder='Heading' />
+			<SpecificationsRow
+				formLabel='Heading'
+				placeholder='Heading'
+				rowId='heading'
+				tableId={tableId}
+			/>
 			{rows}
 			<Button variant='ghost' size='sm' w='80px' onClick={onClickAddRow}>
 				Add Row
