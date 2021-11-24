@@ -38,7 +38,7 @@ export default function ProductDetail({
     const [quantity, setQuantity] = useState(isOutOfStock ? 0 : 1);
     const { cart, handleAddQuantity, handleAddToCart } =
         useContext(CartContext);
-    const { history } = useHistory();
+    const history = useHistory();
 
     const handleChange = (e) => {
         if (e === '') setQuantity(0); // empty input
