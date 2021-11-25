@@ -1,21 +1,20 @@
-import React, { useState, useContext } from 'react';
-import { Button, VStack, HStack, Heading } from '@chakra-ui/react';
+import React, { useContext, useState } from 'react';
+import { Button, Heading, HStack, VStack } from '@chakra-ui/react';
 import SpecificationsTable from './SpecificationsTable';
-import { colors, currentCreateProductForm } from '../../../util/constants';
+import { colors, currentCreateProductForm } from '../../util/constants';
 import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
-import { ProductListingFormContext } from '../../../util/context';
+import { ProductListingFormContext } from '../../util/context';
 
 const SpecificationsForm = ({ setCurrentForm }) => {
+	const { appendTableDataObject, specificationTables } = useContext(
+		ProductListingFormContext
+	);
 	const [tables, setTables] = useState([<SpecificationsTable tableId={0} />]);
 
 	const onAddTableClick = (e) => {
 		appendTableDataObject();
 		setTables([...tables, <SpecificationsTable tableId={tables.length} />]);
 	};
-
-	const { specificationTables, appendTableDataObject } = useContext(
-		ProductListingFormContext
-	);
 
 	return (
 		<VStack w='full' h='full' p={6} spacing={6} alignItems='flex-start'>
@@ -27,7 +26,7 @@ const SpecificationsForm = ({ setCurrentForm }) => {
 				Add Table{' '}
 			</Button>
 
-			<HStack>
+			{/* <HStack>
 				<Button
 					colorScheme={colors.colorScheme}
 					variant='outline'
@@ -50,7 +49,7 @@ const SpecificationsForm = ({ setCurrentForm }) => {
 				>
 					Next
 				</Button>
-			</HStack>
+			</HStack> */}
 		</VStack>
 	);
 };

@@ -1,10 +1,13 @@
-import React, { useState, useContext } from 'react';
-import { Button, Divider, SimpleGrid } from '@chakra-ui/react';
+import React, { useContext, useState } from 'react';
+import { Button, Divider, SimpleGrid, Text } from '@chakra-ui/react';
+
 import SpecificationsRow from './SpecifactionsRow';
-import { ProductListingFormContext } from '../../../util/context';
+import { ProductListingFormContext } from '../../util/context';
 
 const SpecificationsTable = ({ tableId }) => {
-	const { appendRowDataObject } = useContext(ProductListingFormContext);
+	const { appendRowDataObject, specificationTables } = useContext(
+		ProductListingFormContext
+	);
 	const [rows, setRows] = useState([
 		<SpecificationsRow
 			formLabel='Row 1'
@@ -29,7 +32,10 @@ const SpecificationsTable = ({ tableId }) => {
 		]);
 	};
 	return (
-		<SimpleGrid columns={1} rowGap={6} columnGap={6} w='full'>
+		<SimpleGrid columns={1} rowGap={4} columnGap={6} w='full'>
+			<Text size='sm' fontWeight='bold'>
+				{specificationTables[tableId].heading}
+			</Text>
 			<SpecificationsRow
 				formLabel='Heading'
 				placeholder='Heading'

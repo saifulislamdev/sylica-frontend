@@ -1,22 +1,21 @@
 import React, { useContext } from 'react';
-
 import {
-	GridItem,
 	FormControl,
 	FormLabel,
 	FormHelperText,
+	GridItem,
 	Input,
 } from '@chakra-ui/react';
-import { ProductListingFormContext } from '../../../util/context';
+import { ProductListingFormContext } from '../../util/context';
 
 const SpecifactionsRow = ({
 	formLabel,
 	formHelperText,
 	placeholder,
-	tableId,
 	rowId,
+	tableId,
 }) => {
-	const { updateSpecificationsRow, specificationTables } = useContext(
+	const { specificationTables, updateSpecificationsRow } = useContext(
 		ProductListingFormContext
 	);
 	return (

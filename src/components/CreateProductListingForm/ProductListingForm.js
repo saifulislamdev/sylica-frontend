@@ -1,22 +1,9 @@
 import React, { useState } from 'react';
-import {
-	Button,
-	SimpleGrid,
-	GridItem,
-	FormControl,
-	FormLabel,
-	FormHelperText,
-	Input,
-	Container,
-	Textarea,
-	VStack,
-	Heading,
-	Text,
-} from '@chakra-ui/react';
+import { currentCreateProductForm } from '../../util/constants';
+
 import GeneralProductInfoForm from './GeneralProductInfoForm';
-import SpecificationsForm from './SpecificationsForm';
 import ProductImageUpload from './ProductImageUpload';
-import { currentCreateProductForm } from '../../../util/constants';
+import SpecificationsForm from './SpecificationsForm';
 
 const CreateProductListingForm = () => {
 	const [currentForm, setCurrentForm] = useState(
@@ -38,7 +25,15 @@ const CreateProductListingForm = () => {
 				return <GeneralProductInfoForm setCurrentForm={setCurrentForm} />;
 		}
 	};
-	return renderCurrentForm();
+	// return renderCurrentForm();
+
+	return (
+		<>
+			<GeneralProductInfoForm setCurrentForm={setCurrentForm} />
+			<SpecificationsForm setCurrentForm={setCurrentForm} />
+			<ProductImageUpload setCurrentForm={setCurrentForm} />
+		</>
+	);
 };
 
 export default CreateProductListingForm;
