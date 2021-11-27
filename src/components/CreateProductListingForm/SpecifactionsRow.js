@@ -8,16 +8,14 @@ import {
 } from '@chakra-ui/react';
 import { ProductListingFormContext } from '../../util/context';
 
-const SpecifactionsRow = ({
+export default function SpecifactionsRow({
 	formLabel,
 	formHelperText,
 	placeholder,
 	rowId,
 	tableId,
-}) => {
-	const { specificationTables, updateSpecificationsRow } = useContext(
-		ProductListingFormContext
-	);
+}) {
+	const { updateSpecificationsRow } = useContext(ProductListingFormContext);
 	return (
 		<GridItem colSpan={1}>
 			<FormControl>
@@ -28,12 +26,9 @@ const SpecifactionsRow = ({
 						updateSpecificationsRow(e, tableId, rowId);
 					}}
 					rowId={rowId}
-					value={specificationTables[tableId].rows[rowId]}
 				/>
 				{formHelperText && <FormHelperText>{formHelperText}</FormHelperText>}
 			</FormControl>
 		</GridItem>
 	);
-};
-
-export default SpecifactionsRow;
+}

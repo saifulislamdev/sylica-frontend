@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { Button, Divider, SimpleGrid, Text } from '@chakra-ui/react';
 
-import SpecificationsRow from './SpecifactionsRow';
 import { ProductListingFormContext } from '../../util/context';
+import SpecificationsRow from './SpecifactionsRow';
 
-const SpecificationsTable = ({ tableId }) => {
+export default function SpecificationsTable({ tableId }) {
 	const { appendRowDataObject, specificationTables } = useContext(
 		ProductListingFormContext
 	);
@@ -49,6 +49,4 @@ const SpecificationsTable = ({ tableId }) => {
 			<Divider size='full' />
 		</SimpleGrid>
 	);
-};
-
-export default SpecificationsTable;
+}

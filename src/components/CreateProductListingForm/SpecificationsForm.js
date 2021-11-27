@@ -1,11 +1,12 @@
 import React, { useContext, useState } from 'react';
-import { Button, Heading, HStack, VStack } from '@chakra-ui/react';
-import SpecificationsTable from './SpecificationsTable';
-import { colors, currentCreateProductForm } from '../../util/constants';
-import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
+import { Button, Container, Heading, VStack } from '@chakra-ui/react';
+import { colors } from '../../util/constants';
 import { ProductListingFormContext } from '../../util/context';
 
-const SpecificationsForm = ({ setCurrentForm }) => {
+import Specifications from '../Product/Specifications';
+import SpecificationsTable from './SpecificationsTable';
+
+export default function SpecificationsForm() {
 	const { appendTableDataObject, specificationTables } = useContext(
 		ProductListingFormContext
 	);
@@ -26,32 +27,14 @@ const SpecificationsForm = ({ setCurrentForm }) => {
 				Add Table{' '}
 			</Button>
 
-			{/* <HStack>
-				<Button
-					colorScheme={colors.colorScheme}
-					variant='outline'
-					size='sm'
-					leftIcon={<GrFormPrevious />}
-					onClick={() => {
-						setCurrentForm(currentCreateProductForm.generalInfo);
-					}}
-				>
-					Previous
-				</Button>
-				<Button
-					rightIcon={<GrFormNext />}
-					colorScheme='teal'
-					variant='outline'
-					size='sm'
-					onClick={() => {
-						setCurrentForm(currentCreateProductForm.images);
-					}}
-				>
-					Next
-				</Button>
-			</HStack> */}
+			<Container
+				borderColor={colors.neutralLighterGray}
+				borderWidth='1px'
+				borderRadius={6}
+				maxW='full'
+			>
+				<Specifications specifications={specificationTables} />
+			</Container>
 		</VStack>
 	);
-};
-
-export default SpecificationsForm;
+}

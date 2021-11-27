@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import {
-	Button,
 	FormControl,
 	FormHelperText,
 	FormLabel,
@@ -11,8 +10,6 @@ import {
 	Textarea,
 	VStack,
 } from '@chakra-ui/react';
-import { GrFormNext } from 'react-icons/gr';
-import { colors, currentCreateProductForm } from '../../util/constants';
 import { ProductListingFormContext } from '../../util/context';
 
 const GeneralProductInfoForm = ({ setCurrentForm }) => {
@@ -124,18 +121,6 @@ const GeneralProductInfoForm = ({ setCurrentForm }) => {
 					</FormControl>
 				</GridItem>
 			</SimpleGrid>
-
-			{/* <Button
-				rightIcon={<GrFormNext />}
-				colorScheme={colors.colorScheme}
-				variant='outline'
-				size='sm'
-				onClick={() => {
-					setCurrentForm(currentCreateProductForm.specifications);
-				}}
-			>
-				Next
-			</Button> */}
 		</VStack>
 	);
 };
