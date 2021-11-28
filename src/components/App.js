@@ -1,4 +1,5 @@
 import { ChakraProvider } from '@chakra-ui/react';
+import { Redirect } from 'react-router';
 import { Container } from '@chakra-ui/react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
@@ -10,10 +11,12 @@ import LogIn from './LogIn/LogIn';
 import Navbar from './Navbar/Navbar';
 import Product from '../pages/Product';
 import Products from '../pages/Products';
-import SignUp from './SignUp/SignUp';
 import ProductListingForm from './CreateProductListingForm/ProductListingForm';
+import SignUp from './SignUp/SignUp';
+import NotFound from '../pages/404';
 
 import '../styles/App.css';
+import ProductListing from './Product/ProductListing';
 
 function App() {
 	return (
@@ -45,6 +48,10 @@ function App() {
 								<Route path='/create-listing' exact>
 									<ProductListingForm />
 								</Route>
+								<Route path='/404' exact>
+									<NotFound />
+								</Route>
+								<Redirect from='*' to='/404' exact />
 							</Switch>
 						</Router>
 					</Container>
