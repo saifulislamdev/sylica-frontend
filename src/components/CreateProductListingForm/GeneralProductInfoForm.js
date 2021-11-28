@@ -29,7 +29,7 @@ const GeneralProductInfoForm = ({ setCurrentForm }) => {
 							type='text'
 							name='title'
 							onChange={updateGeneralInfoText}
-							value={generalInfo.title}
+							// value={generalInfo.title}
 						/>
 					</FormControl>
 				</GridItem>
@@ -43,7 +43,7 @@ const GeneralProductInfoForm = ({ setCurrentForm }) => {
 							type='text'
 							name='vendor'
 							onChange={updateGeneralInfoText}
-							value={generalInfo.vendor}
+							// value={generalInfo.vendor}
 						/>
 					</FormControl>
 				</GridItem>
@@ -56,7 +56,7 @@ const GeneralProductInfoForm = ({ setCurrentForm }) => {
 							placeholder='description'
 							name='description'
 							onChange={updateGeneralInfoText}
-							value={generalInfo.description}
+							// value={generalInfo.description}
 						/>
 					</FormControl>
 				</GridItem>
@@ -70,7 +70,7 @@ const GeneralProductInfoForm = ({ setCurrentForm }) => {
 							type='text'
 							name='price'
 							onChange={updateGeneralInfoText}
-							value={generalInfo.price}
+							// value={generalInfo.price}
 						/>
 					</FormControl>
 				</GridItem>
@@ -84,7 +84,7 @@ const GeneralProductInfoForm = ({ setCurrentForm }) => {
 							type='text'
 							name='quantity'
 							onChange={updateGeneralInfoText}
-							value={generalInfo.quantity}
+							// value={generalInfo.quantity}
 						/>
 					</FormControl>
 				</GridItem>
@@ -97,7 +97,7 @@ const GeneralProductInfoForm = ({ setCurrentForm }) => {
 							placeholder='category1, category2,...'
 							name='categories'
 							onChange={updateGeneralInfoArray}
-							value={generalInfo.categories.toString()} // convert array back to string to display
+							// value={generalInfo.categories.toString()} // convert array back to string to display
 						/>
 						<FormHelperText>
 							List of categories product belong to separated by commas
@@ -113,7 +113,7 @@ const GeneralProductInfoForm = ({ setCurrentForm }) => {
 							placeholder='sub-category1, sub-category2,...'
 							name='subCategories'
 							onChange={updateGeneralInfoArray}
-							value={generalInfo.subCategories.toString()} // convert array back to string to display
+							// value={generalInfo.subCategories.toString()} // convert array back to string to display
 						/>
 						<FormHelperText>
 							List of sub-categories product belong to separated by commas
