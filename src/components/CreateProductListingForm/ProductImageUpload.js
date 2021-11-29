@@ -8,6 +8,7 @@ import {
 	ListItem,
 	Text,
 	UnorderedList,
+	useToast,
 	VStack,
 } from '@chakra-ui/react';
 import { IoCreateOutline } from 'react-icons/io5';
@@ -36,13 +37,15 @@ export default function ProductImageUpload() {
 		</ListItem>
 	));
 
+	const toast = useToast();
+
 	const onCreateListingClick = async () => {
 		const data = new FormData();
 		data.append('title', generalInfo.title);
 		data.append('vendor', generalInfo.vendor);
 		data.append('description', generalInfo.description);
 		data.append('price', parseFloat(generalInfo.price));
-		data.append('quantity', parseFloat(generalInfo.quantity));
+		data.append('quantity', parseInt(generalInfo.quantity));
 
 		// need to stringify because form data only seem to accept strings
 		data.append('categories', JSON.stringify(generalInfo.categories));
@@ -54,8 +57,26 @@ export default function ProductImageUpload() {
 
 		axiosInstance
 			.post('/products', data)
-			.then((res) => console.log(res.data))
-			.catch((err) => err.response.data);
+			.then((res) => {
+				toast({
+					title: 'Product listing created.',
+					description: `We have created a listing for ${res.data.product.title}.`,
+					status: 'success',
+					duration: '5000',
+					isClosable: true,
+					position: 'top',
+				});
+			})
+			.catch((err) => {
+				toast({
+					title: 'Error occured',
+					description: err.response?.data?.msg || 'Internal server error',
+					status: 'error',
+					duration: '5000',
+					isClosable: true,
+					position: 'top',
+				});
+			});
 	};
 
 	return (
@@ -83,7 +104,7 @@ export default function ProductImageUpload() {
 				</Text>
 				<Text>Drag 'n' drop some files here, or click to select files</Text>
 			</Flex>
-			<Heading size='sz'>Images</Heading>
+			<Heading size='sm'>Images</Heading>
 			<UnorderedList pl={4}>{files}</UnorderedList>
 
 			<Button

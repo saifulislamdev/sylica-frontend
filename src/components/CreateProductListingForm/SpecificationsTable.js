@@ -2,14 +2,14 @@ import React, { useContext, useState } from 'react';
 import { Button, Divider, SimpleGrid, Text } from '@chakra-ui/react';
 
 import { ProductListingFormContext } from '../../util/context';
-import SpecificationsRow from './SpecifactionsRow';
+import SpecificationRow from '././SpecificationRow';
 
 export default function SpecificationsTable({ tableId }) {
 	const { appendRowDataObject, specificationTables } = useContext(
 		ProductListingFormContext
 	);
 	const [rows, setRows] = useState([
-		<SpecificationsRow
+		<SpecificationRow
 			formLabel='Row 1'
 			formHelperText='Specification row: key-value pair separated by comma'
 			placeholder='CPU, Intel i9-1100k'
@@ -22,7 +22,7 @@ export default function SpecificationsTable({ tableId }) {
 		appendRowDataObject(tableId); // appends an empty array in specificationsTables[tableId].rows
 		setRows([
 			...rows,
-			<SpecificationsRow
+			<SpecificationRow
 				formLabel={`Row ${rows.length + 1}`}
 				formHelperText='Specification row: key-value pair separated by comma'
 				placeholder='CPU, Intel i9-1100k'
@@ -36,7 +36,7 @@ export default function SpecificationsTable({ tableId }) {
 			<Text size='sm' fontWeight='bold'>
 				{specificationTables[tableId].heading}
 			</Text>
-			<SpecificationsRow
+			<SpecificationRow
 				formLabel='Heading'
 				placeholder='Heading'
 				rowId='heading'
