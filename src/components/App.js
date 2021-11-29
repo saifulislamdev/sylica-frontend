@@ -44,7 +44,7 @@ function App() {
                             <Route path='/404' exact>
                                 <NotFound />
                             </Route>
-                            <Redirect from='*' to='/404' exact/>
+                            <Redirect from='*' to='/404' exact />
                         </Switch>
                     </Router>
                 </Container>

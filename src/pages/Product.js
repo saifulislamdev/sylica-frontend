@@ -6,7 +6,7 @@ import ProductDetail from '../components/Product/ProductDetail';
 import ProductDetailImages from '../components/Product/ProductDetailImages';
 import Specifications from '../components/Product/Specifications';
 
-import { axiosInstance } from '../util/config';
+import { API_BASE_URL, axiosInstance } from '../util/config';
 
 export default function Products() {
     const [productInfo, setProductInfo] = useState();
@@ -52,8 +52,10 @@ export default function Products() {
                         productInfo.price &&
                         productInfo.quantity && (
                             <ProductDetail
-                                productTitle={productInfo.title}
-                                productDescription={productInfo.description}
+                                id={id}
+                                imageSrc={`${API_BASE_URL}${productInfo.images[0].src}`}
+                                title={productInfo.title}
+                                description={productInfo.description}
                                 price={productInfo.price}
                                 maxQuantity={productInfo.quantity}
                             />
@@ -65,6 +67,8 @@ export default function Products() {
             )}
         </SimpleGrid>
     ) : (
-        <Text color='red' pl='16px'>{errorMessage}</Text>
+        <Text color='red' pl='16px'>
+            {errorMessage}
+        </Text>
     );
 }

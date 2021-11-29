@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
     Box,
@@ -15,6 +15,8 @@ import { BsCartPlus } from 'react-icons/bs';
 
 import { API_BASE_URL } from '../../util/config';
 import { colors } from '../../util/constants';
+import { CartContext } from '../../util/context';
+import { addToCartOrIncrementQuantity } from '../../util/helpers';
 
 export default function ProductListing({
     description,
@@ -24,12 +26,13 @@ export default function ProductListing({
     quantity,
     title,
 }) {
+    const { cart, handleAddQuantity, handleAddToCart } =
+        useContext(CartContext);
     const history = useHistory();
     const isOutOfStock = isNaN(parseInt(quantity)) || parseInt(quantity) === 0;
 
     return (
         <Container
-            onClick={() => history.push(`/products/${id}`)}
             border='1px'
             borderColor={colors.neutralLighterGray}
             borderRadius='12px'
@@ -37,49 +40,62 @@ export default function ProductListing({
             m='16px'
             w='min(270px, 100vw)'
         >
-            <Box h='min(140px, 100vh)'>
-                {isOutOfStock && (
-                    <Tag
-                        bg={colors.primary}
-                        color={colors.neutralWhite}
-                        left='10px'
-                        pos='relative'
-                        top='50px'
-                        variant='subtle'
-                        zIndex='2'
-                    >
-                        Out of Stock
-                    </Tag>
-                )}
-                <Image
-                    src={`${API_BASE_URL}${imageSrc}`}
-                    fallbackSrc='https://via.placeholder.com/150'
-                    border='1px'
-                    borderColor='transparent'
-                    borderRadius='12px'
-                    fit='fill'
-                    loading='lazy'
-                    m='auto'
-                    maxH='min(120px, 100vh)'
-                    maxW='min(220px, 100vw)'
-                    mt='16px'
-                    alt={`Image of ${title}`}
-                ></Image>
+            <Box onClick={() => history.push(`/products/${id}`)}>
+                <Box h='min(140px, 100vh)'>
+                    {isOutOfStock && (
+                        <Tag
+                            bg={colors.primary}
+                            color={colors.neutralWhite}
+                            left='10px'
+                            pos='relative'
+                            top='50px'
+                            variant='subtle'
+                            zIndex='2'
+                        >
+                            Out of Stock
+                        </Tag>
+                    )}
+                    <Image
+                        src={`${API_BASE_URL}${imageSrc}`}
+                        fallbackSrc='https://via.placeholder.com/150'
+                        border='1px'
+                        borderColor='transparent'
+                        borderRadius='12px'
+                        fit='fill'
+                        loading='lazy'
+                        m='auto'
+                        maxH='min(120px, 100vh)'
+                        maxW='min(220px, 100vw)'
+                        mt='16px'
+                        alt={`Image of ${title}`}
+                    ></Image>
+                </Box>
+                <Heading mt='16px' size='xs'>
+                    {title}
+                </Heading>
+                <Text noOfLines='4' size='xs'>
+                    {description}
+                </Text>
+                <Text color={colors.neutralGray} mt='12px' size='xs'>
+                    Price
+                </Text>
+                <Text size='xs' mb='12px'>
+                    ${String(price).includes('.') ? `${price}` : `${price}.00`}
+                </Text>
             </Box>
-            <Heading mt='16px' size='xs'>
-                {title}
-            </Heading>
-            <Text noOfLines='4' size='xs'>
-                {description}
-            </Text>
-            <Text color={colors.neutralGray} mt='12px' size='xs'>
-                Price
-            </Text>
-            <Text size='xs' mb='12px'>
-                ${String(price).includes('.') ? `${price}` : `${price}.00`}
-            </Text>
             <Button
-                // onClick={} // TODO: implemented later and refactor to avoid repetition
+                onClick={() => {
+                    addToCartOrIncrementQuantity(
+                        handleAddQuantity,
+                        cart,
+                        handleAddToCart,
+                        id,
+                        imageSrc,
+                        description,
+                        title,
+                        price
+                    );
+                }}
                 isDisabled={isOutOfStock}
                 borderRadius='6px'
                 colorScheme={colors.colorScheme}
