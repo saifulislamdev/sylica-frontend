@@ -1,71 +1,138 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import {
-	Heading,
-	HStack,
-	Text,
-	Divider,
-	Button,
-	Image,
-	VStack,
+    AlertDialog,
+    AlertDialogBody,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogContent,
+    AlertDialogOverlay,
+    Heading,
+    HStack,
+    Text,
+    Divider,
+    Button,
+    Image,
+    VStack,
 } from '@chakra-ui/react';
 import { colors } from '../../util/constants';
+import { useHistory } from 'react-router';
 
-export default function ActiveProductListing() {
-	return (
-		<VStack
-			width='full'
-			borderWidth='1px'
-			borderRadius={6}
-			alignItems='flex-start'
-			p={6}
-		>
-			<HStack width='full' justifyContent='space-between'>
-				<HStack spacing={6}>
-					<VStack alignItems='flex-start' spacing={0}>
-						<Text color={colors.neutralGray} fontSize='sm'>
-							Price
-						</Text>
-						<Text fontSize='lg'>999.99</Text>
-					</VStack>
-					<VStack alignItems='flex-start' spacing={0}>
-						<Text color={colors.neutralGray} fontSize='sm'>
-							Quantity
-						</Text>
-						<Text fontSize='lg'>100</Text>
-					</VStack>
-				</HStack>
-				<Heading float='right' size='lg'>
-					Active
-				</Heading>
-			</HStack>
-			<Divider />
-			<HStack alignItems='flex-start' spacing={6}>
-				<Image
-					src='https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6476/6476246cv21d.jpg;maxHeight=640;maxWidth=550'
-					alt='img'
-					borderRadius='16px'
-					boxSize='150px'
-					objectFit='contain'
-				/>
+export default function ActiveProductListing({
+    id,
+    imageSrc,
+    title,
+    description,
+    price,
+    maxQuantity,
+}) {
+    // if proper number not passed in for maxQuantity or it is actually out of stock
+    const isOutOfStock =
+        isNaN(parseInt(maxQuantity)) || parseInt(maxQuantity) === 0;
+    const [isOpen, setIsOpen] = useState(false);
+    const cancelRef = useRef();
+    const onClose = () => setIsOpen(false);
+    const history = useHistory();
 
-				<VStack alignItems='flex-start'>
-					<Heading size='md'>Samsung TV</Heading>
-					<Text noOfLines='3' w='80%'>
-						Get enhanced smart capabilities with the TU6985. Crystal Processor
-						4K automatically upscales your favorite movies, TV shows and sports
-						events to 4K. Smart TV powered by Tizen lets you find content and
-						navigate streaming services easily. PurColor fine tunes colors while
-						HDR steps up to millions of shades of color that go beyond what HDTV
-						can offer.
-					</Text>
-					<Button colorScheme={colors.colorScheme} size='xs' variant='outline'>
-						View Item
-					</Button>
-				</VStack>
-				<Button colorScheme={colors.colorScheme} size='sm' w='300px'>
-					Remove Listing
-				</Button>
-			</HStack>
-		</VStack>
-	);
+    return (
+        <VStack
+            width='full'
+            borderWidth='1px'
+            borderRadius={8}
+            alignItems='flex-start'
+            p={4}
+        >
+            <HStack width='full' justifyContent='space-between'>
+                <HStack spacing={6}>
+                    <VStack alignItems='flex-start' spacing={0}>
+                        <Text color={colors.neutralGray} fontSize='sm'>
+                            Price
+                        </Text>
+                        <Text fontSize='lg' data-testid='price'>
+                            {price}
+                        </Text>
+                    </VStack>
+                    <VStack alignItems='flex-start' spacing={0}>
+                        <Text color={colors.neutralGray} fontSize='sm'>
+                            Quantity
+                        </Text>
+                        <Text fontSize='lg' data-testid='quantity'>
+                            {maxQuantity}
+                        </Text>
+                    </VStack>
+                </HStack>
+                <Heading float='right' size='lg' data-testid='status'>
+                    {isOutOfStock ? 'Sold Out' : 'Active'}
+                </Heading>
+            </HStack>
+            <Divider />
+            <HStack alignItems='flex-start' spacing={6}>
+                <Image
+                    src={imageSrc}
+                    alt='img'
+                    borderRadius='16px'
+                    boxSize='150px'
+                    objectFit='contain'
+                    data-testid='image'
+                />
+
+                <VStack alignItems='flex-start'>
+                    <Heading size='md' data-testid='title'>
+                        {title}
+                    </Heading>
+                    <Text noOfLines='3' w='80%' data-testid='description'>
+                        {description}
+                    </Text>
+                    <Button
+                        colorScheme={colors.colorScheme}
+                        size='xs'
+                        variant='outline'
+                        onClick={() => history.push(`/products/${id}`)}
+                    >
+                        View Item
+                    </Button>
+                </VStack>
+                <Button
+                    colorScheme={colors.colorScheme}
+                    size='sm'
+                    w='300px'
+                    onClick={() => {
+                        setIsOpen(true);
+                    }}
+                >
+                    Remove Listing
+                </Button>
+                <AlertDialog
+                    isOpen={isOpen}
+                    leastDestructiveRef={cancelRef}
+                    onClose={onClose}
+                >
+                    <AlertDialogOverlay>
+                        <AlertDialogContent>
+                            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                                Delete Product Listing
+                            </AlertDialogHeader>
+
+                            <AlertDialogBody>
+                                Are you sure? You can't undo this action
+                                afterwards.
+                            </AlertDialogBody>
+
+                            <AlertDialogFooter>
+                                <Button ref={cancelRef} onClick={onClose}>
+                                    Cancel
+                                </Button>
+                                <Button
+                                    colorScheme='red'
+                                    onClick={onClose}
+                                    ml={3}
+                                >
+                                    Delete
+                                </Button>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialogOverlay>
+                </AlertDialog>
+            </HStack>
+        </VStack>
+    );
 }
