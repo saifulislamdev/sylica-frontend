@@ -40,6 +40,7 @@ export default function ActiveProductListing({
             borderRadius={8}
             alignItems='flex-start'
             p={4}
+            mt={4}
         >
             <HStack width='full' justifyContent='space-between'>
                 <HStack spacing={6}>
