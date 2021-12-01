@@ -1,19 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { CartContext } from '../../util/context';
 
 export const CartContextWrapper = ({ children }) => {
-  const [cart, setCart] = useState([
-    {
-      id: 1,
-      title: 'Macbook pro 14 inches',
-      imageURL:
-        'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp14-spacegray-select-202110?wid=904&hei=840&fmt=jpeg&qlt=80&.v=1632788573000',
-      description: 'lorem ipsam',
-      unitPrice: 1999.99,
-      quantity: 1,
-    },
-  ]);
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    if (window.localStorage.getItem('cart')) {
+      setCart(JSON.parse(window.localStorage.getItem('cart')));
+    }
+  }, []);
 
   const calculateTotalItemsInCart = () => {
     let totalItem = 0;
@@ -42,11 +38,14 @@ export const CartContextWrapper = ({ children }) => {
 
   const handleAddQuantity = (id, newQuantity) => {
     try {
-      setCart(
-        cart.map((product) =>
-          product.id === id ? { ...product, quantity: newQuantity } : product
-        )
-      );
+      let newCart = [...cart];
+      newCart.forEach((product) => {
+        if (product.id === id) {
+          product.quantity = newQuantity;
+        }
+      });
+      window.localStorage.setItem('cart', JSON.stringify(newCart));
+      setCart(newCart);
     } catch (error) {
       console.log(error);
     }
@@ -68,11 +67,13 @@ export const CartContextWrapper = ({ children }) => {
       title,
       description,
     };
-    setCart((cart) => cart.push(newProduct));
+    window.localStorage.setItem('cart', JSON.stringify([...cart, newProduct]));
+    setCart([...cart, newProduct]);
   };
 
   const handleRemoveItemFromCart = (id) => {
     const newCart = cart.filter((product) => product.id !== id);
+    window.localStorage.setItem('cart', JSON.stringify(newCart));
     setCart(newCart);
   };
 

@@ -16,41 +16,41 @@ import NotFound from '../pages/404';
 import '../styles/App.css';
 
 function App() {
-    return (
-        <CartContextWrapper>
-            <ChakraProvider>
-                <Container maxWidth='container.xl' p={0}>
-                    <Navbar />
-                    <Router>
-                        <Switch>
-                            <Route path='/auth/signin' exact>
-                                <LogIn />
-                            </Route>
-                            <Route path='/auth/signup' exact>
-                                <SignUp />
-                            </Route>
-                            <Route path='/cart' exact>
-                                <Cart />
-                            </Route>
-                            <Route path='/checkout' exact>
-                                <Checkout />
-                            </Route>
-                            <Route path='/products' exact>
-                                <Products />
-                            </Route>
-                            <Route path='/products/:id' exact>
-                                <Product />
-                            </Route>
-                            <Route path='/404' exact>
-                                <NotFound />
-                            </Route>
-                            <Redirect from='*' to='/404' exact/>
-                        </Switch>
-                    </Router>
-                </Container>
-            </ChakraProvider>
-        </CartContextWrapper>
-    );
+  return (
+    <CartContextWrapper>
+      <ChakraProvider>
+        <Container maxWidth='container.xl' p={0}>
+          <Router>
+            <Navbar />
+            <Switch>
+              <Route path='/auth/signin' exact>
+                <LogIn />
+              </Route>
+              <Route path='/auth/signup' exact>
+                <SignUp />
+              </Route>
+              <Route path='/cart' exact>
+                <Cart />
+              </Route>
+              <Route path='/checkout' exact>
+                <Checkout />
+              </Route>
+              <Route path='/products' exact>
+                <Products />
+              </Route>
+              <Route path='/products/:id' exact>
+                <Product />
+              </Route>
+              <Route path='/404' exact>
+                <NotFound />
+              </Route>
+              <Redirect from='*' to='/404' exact />
+            </Switch>
+          </Router>
+        </Container>
+      </ChakraProvider>
+    </CartContextWrapper>
+  );
 }
 
 export default App;

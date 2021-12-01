@@ -13,12 +13,11 @@ import {
 import { useStripe, useElements } from '@stripe/react-stripe-js';
 import { CartContext } from '../../util/context';
 import { colors } from '../../util/constants';
-import { FRONT_END_BASE_URL } from '../../util/config';
 
 const OrderSummary = ({ checkout }) => {
   const stripe = useStripe();
   const elements = useElements();
-  const { calculateTotalItemsInCart, calculateTotalPriceInCart } =
+  const { calculateTotalItemsInCart, calculateTotalPriceInCart, cart } =
     useContext(CartContext);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -35,10 +34,13 @@ const OrderSummary = ({ checkout }) => {
 
     setIsLoading(true);
 
+    // this is the return url after the payment goes through
+    const returnURL = window.location.href.replace('/checkout', '/order');
+
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: FRONT_END_BASE_URL,
+        return_url: window.location.href,
       },
     });
 
@@ -165,13 +167,19 @@ const OrderSummary = ({ checkout }) => {
         <GridItem colSpan={2}>
           {checkout ? (
             <Link to='/checkout'>
-              <Button size='md' w='full' bg={colors.primary} color='white'>
+              <Button
+                size='md'
+                w='full'
+                bg={colors.primary}
+                color='white'
+                disabled={cart.length === 0}
+              >
                 Checkout
               </Button>
             </Link>
           ) : (
             <Button
-              disabled={isLoading || !stripe || !elements}
+              disabled={isLoading || !stripe || !elements || cart.length === 0}
               size='md'
               w='full'
               bg={colors.primary}
