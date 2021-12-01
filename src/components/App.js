@@ -10,7 +10,7 @@ import LogIn from './LogIn/LogIn';
 import Navbar from './Navbar/Navbar';
 import Product from '../pages/Product';
 import Products from '../pages/Products';
-import ProductListingForm from './CreateProductListingForm/ProductListingForm';
+import SellProducts from '../pages/SellProducts';
 import SignUp from './SignUp/SignUp';
 import NotFound from '../pages/404';
 
@@ -45,8 +45,8 @@ function App() {
                             <Route path='/404' exact>
                                 <NotFound />
                             </Route>
-                            <Route path='/create-listing' exact>
-                                <ProductListingForm />
+                            <Route path='/sell-products' exact>
+                                <SellProducts />
                             </Route>
                             <Redirect from='*' to='/404' exact />
                         </Switch>

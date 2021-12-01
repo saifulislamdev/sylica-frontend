@@ -14,17 +14,18 @@ import ProductListingForm from '../components/CreateProductListingForm/ProductLi
 
 function SellProducts() {
     return (
-        <Box w='full' mb={6}>
-            <Heading mb={4}>Sell Products</Heading>
-            <Tabs
-                borderWidth='1px'
-                borderColor={colors.neutralLighterGray}
-                borderRadius={8}
-                colorScheme={colors.colorScheme}
-            >
+        <Box
+            w='full'
+            mb={6}
+            borderWidth='1px'
+            borderColor={colors.neutralLighterGray}
+            borderRadius={8}
+        >
+            <Heading m={4}>Sell Products</Heading>
+            <Tabs colorScheme={colors.colorScheme}>
                 <TabList mt={6} ml={6} mr={6}>
-                    <Tab>Active Listings</Tab>
-                    <Tab>Sell Products</Tab>
+                    <Tab data-testid='active-listings-btn'>Active Listings</Tab>
+                    <Tab data-testid='create-listing-btn'>Create Listing</Tab>
                 </TabList>
 
                 <TabPanels>
