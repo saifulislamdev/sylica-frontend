@@ -55,6 +55,7 @@ export default function ProductPagination({
                 </Text>
                 <Select
                     onChange={handleProductsPerPageChange}
+                    value={productsPerPage}
                     borderColor={colors.neutralLighterGray}
                     borderRadius='6px'
                     mx='8px'
@@ -62,12 +63,6 @@ export default function ProductPagination({
                     w='auto'
                 >
                     {productsPerPageOptions.map((option) => {
-                        if (option === productsPerPage)
-                            return (
-                                <option value={option} selected>
-                                    {option}
-                                </option>
-                            );
                         return <option value={option}>{option}</option>;
                     })}
                 </Select>
