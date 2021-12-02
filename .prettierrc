@@ -1,0 +1,7 @@
+{
+	"editor.formatOnSave": true,
+	"jsxSingleQuote": true,
+	"singleQuote": true,
+	"tabWidth": 4,
+	"useTabs": false
+}

@@ -8,3 +8,9 @@ export const colors = {
     neutralLighterGray: 'gray.200',
     neutralWhite: 'white',
 };
+
+export const currentCreateProductForm = {
+    generalInfo: 'GENERAL_INFO',
+    specifications: 'SPECIFICATIONS',
+    images: 'IMAGES',
+};
