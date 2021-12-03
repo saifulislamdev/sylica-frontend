@@ -48,20 +48,16 @@ export default function ActiveProductListing({
                         <Text color={colors.neutralGray} fontSize='sm'>
                             Price
                         </Text>
-                        <Text fontSize='lg' data-testid='price'>
-                            {price}
-                        </Text>
+                        <Text fontSize='lg'>{price}</Text>
                     </VStack>
                     <VStack alignItems='flex-start' spacing={0}>
                         <Text color={colors.neutralGray} fontSize='sm'>
                             Quantity
                         </Text>
-                        <Text fontSize='lg' data-testid='quantity'>
-                            {maxQuantity}
-                        </Text>
+                        <Text fontSize='lg'>{maxQuantity}</Text>
                     </VStack>
                 </HStack>
-                <Heading float='right' size='lg' data-testid='status'>
+                <Heading float='right' size='lg'>
                     {isOutOfStock ? 'Sold Out' : 'Active'}
                 </Heading>
             </HStack>
@@ -73,14 +69,11 @@ export default function ActiveProductListing({
                     borderRadius='16px'
                     boxSize='150px'
                     objectFit='contain'
-                    data-testid='image'
                 />
 
                 <VStack alignItems='flex-start'>
-                    <Heading size='md' data-testid='title'>
-                        {title}
-                    </Heading>
-                    <Text noOfLines='3' w='80%' data-testid='description'>
+                    <Heading size='md'>{title}</Heading>
+                    <Text noOfLines='3' w='80%'>
                         {description}
                     </Text>
                     <Button

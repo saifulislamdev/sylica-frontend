@@ -172,7 +172,7 @@ export default function ProductDetail({
                 isDisabled={quantity === 0}
                 isFullWidth={true}
                 borderColor={colors.primary}
-                colorScheme={colors.primary}
+                colorScheme={colors.colorScheme}
                 size='sm'
                 variant='outline'
             >
