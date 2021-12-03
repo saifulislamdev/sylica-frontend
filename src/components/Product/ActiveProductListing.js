@@ -20,6 +20,7 @@ import { useHistory } from 'react-router';
 export default function ActiveProductListing({
     id,
     imageSrc,
+    altImageText,
     title,
     description,
     price,
@@ -65,7 +66,7 @@ export default function ActiveProductListing({
             <HStack alignItems='flex-start' spacing={6}>
                 <Image
                     src={imageSrc}
-                    alt='img'
+                    alt={altImageText}
                     borderRadius='16px'
                     boxSize='150px'
                     objectFit='contain'

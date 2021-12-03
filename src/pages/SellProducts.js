@@ -35,8 +35,8 @@ function SellProducts() {
                                 title='MacBook Pro 14"'
                                 price='199.99'
                                 maxQuantity='34'
-                                description='lorefj;aklfjdas;klf jdklfjdsaklfh ;lkdshf kdfhdsj;fh djlfhsdfj lfdhfjkfdh fdkjlfhdjkf hsdj dlfhfjdf ljfhdjkf hsdlfhjsfls df '
-                                imageSrc='http://localhost:5000/api/products/images/00dca6e72ae5506507e7270ea7a62792.jpeg'
+                                description='The new MacBook Pro delivers game-changing performance for pro users. With the powerful M1 Pro to supercharge pro-level workflows while getting amazing battery life.¹ And with an immersive 14-inch Liquid Retina XDR display and an array of pro ports, you can do more than ever with MacBook Pro.²'
+                                imageSrc='https://www.apple.com/v/macbook-pro-14-and-16/b/images/meta/macbook-pro-14-and-16_overview__fz0lron5xyuu_og.png'
                             />
                         ))}
                     </TabPanel>

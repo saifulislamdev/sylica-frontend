@@ -2,7 +2,7 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import SellProducts from '../../pages/SellProducts';
+import SellProducts from './SellProducts';
 
 it('should render active listings', () => {
     render(<SellProducts />);
