@@ -8,6 +8,7 @@ import {
   Text,
   Button,
   Divider,
+  useToast,
 } from '@chakra-ui/react';
 import { useStripe, useElements } from '@stripe/react-stripe-js';
 import { CartContext } from '../../util/context';
@@ -16,15 +17,11 @@ import { colors } from '../../util/constants';
 const OrderSummary = ({ checkout }) => {
   const stripe = useStripe();
   const elements = useElements();
-  const {
-    cart,
-    setCart,
-    calculateTotalItemsInCart,
-    calculateTotalPriceInCart,
-  } = useContext(CartContext);
+  const { calculateTotalItemsInCart, calculateTotalPriceInCart, cart } =
+    useContext(CartContext);
 
-  const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const toast = useToast();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,10 +34,13 @@ const OrderSummary = ({ checkout }) => {
 
     setIsLoading(true);
 
+    // this is the return url after the payment goes through
+    const returnURL = window.location.href.replace('/checkout', '/order');
+
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: 'http://localhost:3000/checkout',
+        return_url: window.location.href,
       },
     });
 
@@ -50,9 +50,19 @@ const OrderSummary = ({ checkout }) => {
     // be redirected to an intermediate site first to authorize the payment, then
     // redirected to the `return_url`.
     if (error.type === 'card_error' || error.type === 'validation_error') {
-      setMessage(error.message);
+      toast({
+        title: 'Invalid card.',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
     } else {
-      setMessage('An unexpected error occured.');
+      toast({
+        title: 'Server error',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
     }
 
     setIsLoading(false);
@@ -73,18 +83,43 @@ const OrderSummary = ({ checkout }) => {
 
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
       switch (paymentIntent.status) {
-        case 'succeeded':
-          setMessage('Payment succeeded!');
+        case 'succeeded': {
+          toast({
+            title: 'Payment succeeded.',
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+          });
           break;
-        case 'processing':
-          setMessage('Your payment is processing.');
+        }
+
+        case 'processing': {
+          toast({
+            title: 'Payment processing.',
+            status: 'warning',
+            duration: 9000,
+            isClosable: true,
+          });
           break;
-        case 'requires_payment_method':
-          setMessage('Your payment was not successful, please try again.');
+        }
+        case 'requires_payment_method': {
+          toast({
+            title: 'Payment unsuccessful.',
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+          });
           break;
-        default:
-          setMessage('Something went wrong.');
+        }
+        default: {
+          toast({
+            title: 'Server error',
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+          });
           break;
+        }
       }
     });
   }, [stripe]);
@@ -132,13 +167,19 @@ const OrderSummary = ({ checkout }) => {
         <GridItem colSpan={2}>
           {checkout ? (
             <Link to='/checkout'>
-              <Button size='md' w='full' bg={colors.primary} color='white'>
+              <Button
+                size='md'
+                w='full'
+                bg={colors.primary}
+                color='white'
+                disabled={cart.length === 0}
+              >
                 Checkout
               </Button>
             </Link>
           ) : (
             <Button
-              disabled={isLoading || !stripe || !elements}
+              disabled={isLoading || !stripe || !elements || cart.length === 0}
               size='md'
               w='full'
               bg={colors.primary}
@@ -153,21 +194,6 @@ const OrderSummary = ({ checkout }) => {
                 )}
               </span>
             </Button>
-          )}
-        </GridItem>
-        <GridItem colSpan={2}>
-          {message && (
-            <div
-              style={{
-                color: 'rgb(105, 115, 134)',
-                fontSize: '16px',
-                lineHeight: '20px',
-                paddingTop: '12px',
-                textAlign: 'center',
-              }}
-            >
-              {message}
-            </div>
           )}
         </GridItem>
       </SimpleGrid>
