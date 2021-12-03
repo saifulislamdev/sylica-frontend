@@ -11,7 +11,9 @@ import LogIn from './LogIn/LogIn';
 import Navbar from './Navbar/Navbar';
 import Product from '../pages/Product';
 import Products from '../pages/Products';
+import ProductListingForm from './CreateProductListingForm/ProductListingForm';
 import SignUp from './SignUp/SignUp';
+import NotFound from '../pages/404';
 
 import '../styles/App.css';
 
@@ -44,6 +46,13 @@ function App() {
                             <Route path='/products/:id' exact>
                                 <Product />
                             </Route>
+                            <Route path='/404' exact>
+                                <NotFound />
+                            </Route>
+                            <Route path='/create-listing' exact>
+                                <ProductListingForm />
+                            </Route>
+                            <Redirect from='*' to='/404' exact />
                         </Switch>
                     </Router>
                 </Container>

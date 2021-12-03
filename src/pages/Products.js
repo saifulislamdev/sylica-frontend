@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Input } from '@chakra-ui/react';
+import { Box, Input, Text } from '@chakra-ui/react';
 import Products from '../components/Product/Products';
 import ProductPagination from '../components/Product/ProductPagination';
 
@@ -23,8 +23,9 @@ export default function ProductsPage() {
         setCurrPage(0);
     };
 
-    return (
+    return !error ? (
         <>
+            {/* Search */}
             <Box p='16px'>
                 <Input
                     onChange={handleSearchChange}
@@ -64,5 +65,9 @@ export default function ProductsPage() {
                 totalProducts={products.length}
             />
         </>
+    ) : (
+        <Text color='red' pl='16px'>
+            {errorMessage}
+        </Text>
     );
 }

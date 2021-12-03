@@ -52,23 +52,27 @@ export const CartContextWrapper = ({ children }) => {
     }
   };
 
-  const handleAddToCart = ({
+  const handleAddToCart = (
     id,
     quantity,
     unitPrice,
     imageURL,
     title,
-    description,
-  }) => {
-    const newProduct = {
-      id,
-      unitPrice,
-      quantity,
-      imageURL,
-      title,
-      description,
-    };
-    setCart((cart) => cart.push(newProduct));
+    description
+  ) => {
+    try {
+      const newProduct = {
+        id,
+        unitPrice,
+        quantity,
+        imageURL,
+        title,
+        description,
+      };
+      setCart((cart) => [...cart, newProduct]);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleRemoveItemFromCart = (id) => {

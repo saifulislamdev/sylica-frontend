@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import { Button, Container, Heading } from '@chakra-ui/react';
+import Carousel from '../components/Product/Carousel';
 import Products from '../components/Product/Products';
 import { colors } from '../util/constants';
 
@@ -21,7 +22,8 @@ export default function Home() {
 
     return (
         <>
-            <Heading m='16px' size='xl'>
+            <Carousel />
+            <Heading m='32px 0px 16px 16px' size='xl'>
                 Discover
             </Heading>
             <Products
