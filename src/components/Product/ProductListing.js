@@ -90,7 +90,7 @@ export default function ProductListing({
                         cart,
                         handleAddToCart,
                         id,
-                        imageSrc,
+                        `${API_BASE_URL}${imageSrc}`, // had to send with API_BASE_URL otherwise wouldn't show img
                         description,
                         title,
                         price
