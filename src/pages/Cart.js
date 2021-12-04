@@ -12,10 +12,10 @@ import {
 } from '@chakra-ui/react';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import CartItem from './CartItem';
-import { CartContext } from '../../util/context';
-import OrderSummary from '../Checkout/OrderSummary';
-import { colors } from '../../util/constants';
+import CartItem from '../components/Cart/CartItem';
+import { CartContext } from '../util/context';
+import OrderSummary from '../components/Checkout/OrderSummary';
+import { colors } from '../util/constants';
 
 const stripePromise = loadStripe(
     'pk_test_51IlQGnEwHOsES7xUluOPPi4TS3wGXqraJVNWZvGMNlEY9HAg0ust8ilDKraQEV5T891nLuYgGoUP1FZAZtMRh5Oi00FpRjnaCu' ??
@@ -27,7 +27,7 @@ const Cart = () => {
         useContext(CartContext);
 
     return (
-        <div data-testid='cart '>
+        <div data-testid='cart ' style={{ marginBottom: '150px' }}>
             <Elements stripe={stripePromise}>
                 <Flex h='100vh' py={20}>
                     <SimpleGrid columns={3} rowGap={6} columnGap={3} w='full'>

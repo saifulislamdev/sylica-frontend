@@ -56,7 +56,9 @@ const CartItem = ({
             />
             <Box p={4}>
                 <Heading size='l'>{title}</Heading>
-                <Text maxW='400px'>{description}</Text>
+                <Text maxW='400px' noOfLines={4}>
+                    {description}
+                </Text>
             </Box>
             <Box p={4}>
                 <NumberInput

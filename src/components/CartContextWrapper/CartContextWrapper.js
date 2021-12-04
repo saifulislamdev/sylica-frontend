@@ -12,29 +12,21 @@ export const CartContextWrapper = ({ children }) => {
     }, []);
 
     const calculateTotalItemsInCart = () => {
-        let totalItem = 0;
-        try {
-            cart.forEach((product) => {
-                totalItem = totalItem + parseInt(product.quantity);
-            });
-            return totalItem;
-        } catch (error) {
-            console.log(error);
-        }
+        return cart.reduce(
+            (accum, product) => accum + parseInt(product.quantity),
+            0
+        );
     };
 
     const calculateTotalPriceInCart = () => {
-        let totalPrice = 0;
-        try {
-            cart.forEach((product) => {
-                totalPrice =
-                    totalPrice +
-                    product.quantity * parseFloat(product.unitPrice);
-            });
-            return totalPrice.toFixed(2);
-        } catch (error) {
-            console.log(error);
-        }
+        return cart
+            .reduce(
+                (accum, product) =>
+                    accum +
+                    parseInt(product.quantity) * parseFloat(product.unitPrice),
+                0
+            )
+            .toFixed(2);
     };
 
     const handleAddQuantity = (id, newQuantity) => {
