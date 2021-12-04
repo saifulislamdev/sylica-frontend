@@ -4,7 +4,7 @@ import { Container } from '@chakra-ui/react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { CartContextWrapper } from './CartContextWrapper/CartContextWrapper';
-import Cart from './Cart/Cart';
+import Cart from '../pages/Cart';
 import Checkout from './Checkout/Checkout';
 import Home from '../pages/Home';
 import LogIn from './LogIn/LogIn';
