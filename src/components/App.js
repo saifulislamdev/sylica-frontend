@@ -25,6 +25,9 @@ function App() {
                     <Navbar />
                     <Router>
                         <Switch>
+                            <Route path='/' exact>
+                                <Home />
+                            </Route>
                             <Route path='/auth/signin' exact>
                                 <LogIn />
                             </Route>
@@ -36,9 +39,6 @@ function App() {
                             </Route>
                             <Route path='/checkout' exact>
                                 <Checkout />
-                            </Route>
-                            <Route path='/home' exact>
-                                <Home />
                             </Route>
                             <Route path='/products' exact>
                                 <Products />
