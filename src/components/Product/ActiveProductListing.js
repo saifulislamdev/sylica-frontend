@@ -16,6 +16,7 @@ import {
 } from '@chakra-ui/react';
 import { colors } from '../../util/constants';
 import { useHistory } from 'react-router';
+import { API_BASE_URL } from '../../util/config';
 
 export default function ActiveProductListing({
     id,
@@ -65,7 +66,7 @@ export default function ActiveProductListing({
             <Divider />
             <HStack alignItems='flex-start' spacing={6}>
                 <Image
-                    src={imageSrc}
+                    src={`${API_BASE_URL}${imageSrc}`}
                     alt={altImageText}
                     borderRadius='16px'
                     boxSize='150px'
