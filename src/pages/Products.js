@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Input, SimpleGrid, Skeleton, Text } from '@chakra-ui/react';
+import { Box, Input, Text } from '@chakra-ui/react';
 import Products from '../components/Product/Products';
 import ProductPagination from '../components/Product/ProductPagination';
 
@@ -40,6 +40,7 @@ export default function ProductsPage() {
             </Box>
             <Products
                 error={error}
+                errorMessage={errorMessage}
                 isLoaded={isLoaded}
                 pageFirstProductIndex={pageFirstProductIndex}
                 pageLastProductIndex={pageLastProductIndex}
