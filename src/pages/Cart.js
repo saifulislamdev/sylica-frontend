@@ -37,7 +37,7 @@ const Cart = () => {
                                 h='full'
                                 p={5}
                                 spacing={10}
-                                borderWidth='2px'
+                                borderWidth='1px'
                                 borderRadius='25px'
                             >
                                 <Heading

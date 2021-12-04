@@ -131,7 +131,7 @@ const OrderSummary = ({ checkout }) => {
             spacing={10}
             alignItems='flex-start'
             style={{
-                border: '2px solid #E2E8F0',
+                border: '1px solid #E2E8F0',
                 borderRadius: '25px',
             }}
         >
