@@ -81,6 +81,7 @@ export default function ProductDetailImages({ images, maxQuantity }) {
                                 m={totalImages < 20 ? '2px' : '1px'}
                                 w={`min(75px, ${90 / totalImages}%)`}
                                 alt={image.name}
+                                key={`imageOption${i}`}
                             ></Image>
                         );
                     })}
