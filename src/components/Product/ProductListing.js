@@ -38,7 +38,7 @@ export default function ProductListing({
             borderRadius='12px'
             cursor='pointer'
             m='16px'
-            w='min(270px, 100vw)'
+            w='min(288px, 100vw)'
         >
             <Box onClick={() => history.push(`/products/${id}`)}>
                 <Box h='min(140px, 100vh)'>
@@ -90,7 +90,7 @@ export default function ProductListing({
                         cart,
                         handleAddToCart,
                         id,
-                        imageSrc,
+                        `${API_BASE_URL}${imageSrc}`, // had to send with API_BASE_URL otherwise wouldn't show img
                         description,
                         title,
                         price

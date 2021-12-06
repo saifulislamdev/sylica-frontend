@@ -1,98 +1,91 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { CartContext } from '../../util/context';
 
 export const CartContextWrapper = ({ children }) => {
-  const [cart, setCart] = useState([
-    {
-      id: 1,
-      title: 'Macbook pro 14 inches',
-      imageURL:
-        'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp14-spacegray-select-202110?wid=904&hei=840&fmt=jpeg&qlt=80&.v=1632788573000',
-      description: 'lorem ipsam',
-      unitPrice: 1999.99,
-      quantity: 1,
-    },
-  ]);
+    const [cart, setCart] = useState([]);
 
-  const calculateTotalItemsInCart = () => {
-    let totalItem = 0;
-    try {
-      cart.forEach((product) => {
-        totalItem = totalItem + parseInt(product.quantity);
-      });
-      return totalItem;
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    useEffect(() => {
+        if (window.localStorage.getItem('cart')) {
+            setCart(JSON.parse(window.localStorage.getItem('cart')));
+        }
+    }, []);
 
-  const calculateTotalPriceInCart = () => {
-    let totalPrice = 0;
-    try {
-      cart.forEach((product) => {
-        totalPrice =
-          totalPrice + product.quantity * parseFloat(product.unitPrice);
-      });
-      return totalPrice.toFixed(2);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    const calculateTotalItemsInCart = () => {
+        return cart.reduce(
+            (accum, product) => accum + parseInt(product.quantity),
+            0
+        );
+    };
 
-  const handleAddQuantity = (id, newQuantity) => {
-    try {
-      setCart(
-        cart.map((product) =>
-          product.id === id ? { ...product, quantity: newQuantity } : product
-        )
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    const calculateTotalPriceInCart = () => {
+        return cart
+            .reduce(
+                (accum, product) =>
+                    accum +
+                    parseInt(product.quantity) * parseFloat(product.unitPrice),
+                0
+            )
+            .toFixed(2);
+    };
 
-  const handleAddToCart = (
-    id,
-    quantity,
-    unitPrice,
-    imageURL,
-    title,
-    description
-  ) => {
-    try {
-      const newProduct = {
+    const handleAddQuantity = (id, newQuantity) => {
+        try {
+            let newCart = [...cart];
+            newCart.forEach((product) => {
+                if (product.id === id) {
+                    product.quantity = newQuantity;
+                }
+            });
+            window.localStorage.setItem('cart', JSON.stringify(newCart));
+            setCart(newCart);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const handleAddToCart = ({
         id,
-        unitPrice,
         quantity,
+        unitPrice,
         imageURL,
         title,
         description,
-      };
-      setCart((cart) => [...cart, newProduct]);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    }) => {
+        const newProduct = {
+            id,
+            unitPrice,
+            quantity,
+            imageURL,
+            title,
+            description,
+        };
+        window.localStorage.setItem(
+            'cart',
+            JSON.stringify([...cart, newProduct])
+        );
+        setCart([...cart, newProduct]);
+    };
 
-  const handleRemoveItemFromCart = (id) => {
-    const newCart = cart.filter((product) => product.id !== id);
-    setCart(newCart);
-  };
+    const handleRemoveItemFromCart = (id) => {
+        const newCart = cart.filter((product) => product.id !== id);
+        window.localStorage.setItem('cart', JSON.stringify(newCart));
+        setCart(newCart);
+    };
 
-  return (
-    <CartContext.Provider
-      value={{
-        cart,
-        setCart,
-        calculateTotalItemsInCart,
-        handleAddQuantity,
-        handleAddToCart,
-        handleRemoveItemFromCart,
-        calculateTotalPriceInCart,
-      }}
-    >
-      {children}
-    </CartContext.Provider>
-  );
+    return (
+        <CartContext.Provider
+            value={{
+                cart,
+                setCart,
+                calculateTotalItemsInCart,
+                handleAddQuantity,
+                handleAddToCart,
+                handleRemoveItemFromCart,
+                calculateTotalPriceInCart,
+            }}
+        >
+            {children}
+        </CartContext.Provider>
+    );
 };

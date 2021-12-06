@@ -13,7 +13,7 @@ import {
     Text,
     Button,
 } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 import { axiosInstance } from '../../util/config';
 
@@ -22,6 +22,7 @@ export default function LogIn() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false); // if any input validation error occur
     const [errorMessage, setErrorMessage] = useState('');
+    const history = useHistory();
 
     // input validation schema
     const logInSchema = Yup.object().shape({
@@ -45,7 +46,9 @@ export default function LogIn() {
                     password: password,
                 })
                 .then((response) => {
-                    console.log(response.data);
+                    window.localStorage.setItem('token', response.data.token);
+                    window.localStorage.setItem('user', response.data.user);
+                    history.push('/cart');
                 })
                 .catch((err) => {
                     setErrorMessage(err.response.data.msg); // msg is the field for error message from backend

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import { axiosInstance } from '../../util/config';
-import axios from 'axios';
 import OrderSummary from './OrderSummary';
 import {
   Heading,
