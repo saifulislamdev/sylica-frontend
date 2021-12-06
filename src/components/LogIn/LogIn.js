@@ -47,6 +47,7 @@ export default function LogIn() {
                 })
                 .then((response) => {
                     window.localStorage.setItem('token', response.data.token);
+                    window.localStorage.setItem('user', response.data.user);
                     history.push('/cart');
                 })
                 .catch((err) => {
