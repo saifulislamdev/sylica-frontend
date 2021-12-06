@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { axiosInstance } from '../../util/config';
 import OrderItem from './OrderItem';
+import { colors } from '../../util/constants';
 
 const OrdersContainer = () => {
     const [ordersList, setOrdersList] = useState([]);
@@ -19,7 +20,7 @@ const OrdersContainer = () => {
             .get('/orders/recent-order', {
                 headers: {
                     'x-auth-token':
-                        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjE5ZjA3MzY2ZTNhZTcwMDIxMzMwOTUyIn0sImlhdCI6MTYzODc2NDc5NiwiZXhwIjoxNjM4NzY4Mzk2fQ.qkG_B1fWlF39QEXGx0p68Bf9-4CThFHODxHDQdIKgMY',
+                        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjE5ZjA3MzY2ZTNhZTcwMDIxMzMwOTUyIn0sImlhdCI6MTYzODgxNzc1MCwiZXhwIjoxNjM4ODIxMzUwfQ.4LWhTigk-EEtcc9dI_FJfxngLCTF2fXSJIUR7kJZyT0',
                 },
             })
             .then((res) => {
@@ -59,7 +60,7 @@ const OrdersContainer = () => {
                                     >
                                         <SimpleGrid columns={3} spacing={10}>
                                             <Box height='80px'>
-                                                <Text color='gray'>
+                                                <Text color={colors.neutralGray}>
                                                     Order placed
                                                 </Text>
                                                 {/* order.created_at.getMonth(), order.created_at.getDate(), order.created_at.getFullYear() */}
@@ -79,11 +80,11 @@ const OrdersContainer = () => {
                                                 </Text>
                                             </Box>
                                             <Box height='80px'>
-                                                <Text color='gray'>Total</Text>
+                                                <Text color={colors.neutralGray}>Total</Text>
                                                 <Text>{`$${order.totalAmount}`}</Text>
                                             </Box>
                                             <Box height='80px'>
-                                                <Text color='gray'>
+                                                <Text color={colors.neutralGray}>
                                                     Order #
                                                 </Text>
                                                 <Text>{order._id}</Text>

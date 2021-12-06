@@ -15,13 +15,13 @@ import { colors } from '../../util/constants';
 const OrderItem = ({ productId }) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [images, setImages] = useState('');
+    const [image, setImage] = useState('');
     const getProductInfo = () => {
         axiosInstance.get(`/products/${productId}`).then((res) => {
             const { title, description, images } = res.data.product;
             setTitle(title);
             setDescription(description);
-            setImages(images[0]);
+            setImage(images[0]);
         });
     };
 
@@ -33,9 +33,9 @@ const OrderItem = ({ productId }) => {
     return (
         <Flex maxW='full' p={4} mb={6} align='center'>
             <Image
-                src={`${API_BASE_URL}${images.src}`}
+                src={`${API_BASE_URL}${image.src}`}
                 fallbackSrc='https://via.placeholder.com/350'
-                alt={images.name}
+                alt={image.name}
                 borderRadius='16px'
                 boxSize='150px'
                 objectFit='contain'
@@ -44,7 +44,7 @@ const OrderItem = ({ productId }) => {
             />
 
             <Box p={4}>
-                <Heading size='l'>{title}</Heading>
+                <Heading size='sm'>{title}</Heading>
                 <Text>{description}</Text>
                 <Button onClick={() => history.push(`/products/${productId}`)}>
                     View Item
