@@ -14,6 +14,7 @@ import Products from '../pages/Products';
 import SellProducts from '../pages/SellProducts';
 import SignUp from './SignUp/SignUp';
 import NotFound from '../pages/404';
+import Orders from './Orders/OrdersContainer';
 
 import '../styles/App.css';
 
@@ -51,6 +52,9 @@ function App() {
                             </Route>
                             <Route path='/sell-products' exact>
                                 <SellProducts />
+                            </Route>
+                            <Route path='/orders' exact>
+                                <Orders />
                             </Route>
                             <Redirect from='*' to='/404' exact />
                         </Switch>
