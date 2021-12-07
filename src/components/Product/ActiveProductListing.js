@@ -13,10 +13,12 @@ import {
     Button,
     Image,
     VStack,
+    useToast,
 } from '@chakra-ui/react';
 import { colors } from '../../util/constants';
 import { useHistory } from 'react-router';
-import { API_BASE_URL } from '../../util/config';
+import { API_BASE_URL, axiosInstance } from '../../util/config';
+import axios from 'axios';
 
 export default function ActiveProductListing({
     id,
@@ -34,6 +36,44 @@ export default function ActiveProductListing({
     const cancelRef = useRef();
     const onClose = () => setIsOpen(false);
     const history = useHistory();
+    const toast = useToast();
+
+    const onClickDelete = () => {
+        axiosInstance.interceptors.request.use(function (config) {
+            const token = JSON.parse(localStorage.getItem('token'));
+            config.headers['x-auth-token'] = token;
+
+            return config;
+        });
+
+        axiosInstance
+            .delete(`/products/${id}`)
+            .then((res) => {
+                toast({
+                    title: 'Product listing deleted.',
+                    description: res.data.msg,
+                    status: 'success',
+                    duration: '5000',
+                    isClosable: true,
+                    position: 'top',
+                });
+
+                setIsOpen(false);
+            })
+            .catch((err) => {
+                toast({
+                    title: 'Error occured',
+                    description:
+                        err.response?.data?.msg || 'Internal server error',
+                    status: 'error',
+                    duration: '5000',
+                    isClosable: true,
+                    position: 'top',
+                });
+
+                setIsOpen(false);
+            });
+    };
 
     return (
         <VStack
@@ -119,7 +159,7 @@ export default function ActiveProductListing({
                                 </Button>
                                 <Button
                                     colorScheme='red'
-                                    onClick={onClose}
+                                    onClick={onClickDelete}
                                     ml={3}
                                 >
                                     Delete

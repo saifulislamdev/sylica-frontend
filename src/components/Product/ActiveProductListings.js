@@ -43,6 +43,7 @@ function ActiveProductListings() {
                         price={listing.price}
                         maxQuantity={listing.quantity}
                         title={listing.title}
+                        id={listing.id}
                     />
                 ))
             )}
