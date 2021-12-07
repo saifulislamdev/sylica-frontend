@@ -16,12 +16,16 @@ import { AiOutlineCloudUpload } from 'react-icons/ai';
 
 import { axiosInstance } from '../../util/config';
 import { colors } from '../../util/constants';
-import { ProductListingFormContext } from '../../util/context';
-import axios from 'axios';
+import { ProductListingFormContext, CartContext } from '../../util/context';
 
 export default function ProductImageUpload() {
     const { updateImages, images, specificationTables, generalInfo } =
         useContext(ProductListingFormContext);
+
+    let { token } = useContext(CartContext);
+    if (!token) {
+        token = JSON.parse(window.localStorage.getItem('token'));
+    }
 
     const onDrop = useCallback((acceptedFiles) => {
         updateImages(acceptedFiles);
@@ -59,16 +63,12 @@ export default function ProductImageUpload() {
         // cannot pass an array of images so have to append them in order in loop
         images.forEach((image) => data.append('images', image));
 
-        // sending token to backend
-        axiosInstance.interceptors.request.use(function (config) {
-            const token = JSON.parse(localStorage.getItem('token'));
-            config.headers['x-auth-token'] = token;
-
-            return config;
-        });
-
         axiosInstance
-            .post('/products', data)
+            .post('/products', data, {
+                headers: {
+                    'x-auth-token': token,
+                },
+            })
             .then((res) => {
                 setIsLoading(false);
                 toast({
