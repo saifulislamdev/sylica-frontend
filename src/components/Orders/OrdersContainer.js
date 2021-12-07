@@ -16,6 +16,7 @@ import { CartContext } from '../../util/context';
 const OrdersContainer = () => {
     const [ordersList, setOrdersList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [errorMessage, setErrorMessage] = useState('');
     let { token } = useContext(CartContext);
     if (!token) {
         token = JSON.parse(window.localStorage.getItem('token'));
@@ -31,6 +32,9 @@ const OrdersContainer = () => {
                 const { orders } = res.data;
                 setOrdersList(orders);
                 setIsLoading(false);
+            })
+            .catch((err) => {
+                setErrorMessage(err.response.data.msg);
             });
     }, []);
 
