@@ -12,6 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { AiOutlineShoppingCart, AiOutlineUser } from 'react-icons/ai';
 import { CartContext } from '../../util/context';
+import { colors } from '../../util/constants';
 
 export default function Navbar() {
     const history = useHistory();
@@ -72,7 +73,7 @@ export default function Navbar() {
                 <Box p='4' onClick={() => history.push('/auth/signin')}>
                     <IconButton
                         variant='outline'
-                        colorScheme='teal'
+                        colorScheme={colors.colorScheme}
                         icon={<AiOutlineUser />}
                     />
                 </Box>
@@ -83,13 +84,13 @@ export default function Navbar() {
             <Box p='4' onClick={() => history.push('/cart')}>
                 <IconButton
                     variant='outline'
-                    colorScheme='teal'
+                    colorScheme={colors.colorScheme}
                     icon={<AiOutlineShoppingCart />}
                 />
                 <Badge
                     variant='outline'
                     bg='white'
-                    colorScheme='teal'
+                    colorScheme={colors.colorScheme}
                     borderRadius='50%'
                     position='relative'
                     top='-20px'
