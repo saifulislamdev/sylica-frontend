@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { axiosInstance } from '../../util/config';
 import ActiveProductListing from './ActiveProductListing';
+import { Text } from '@chakra-ui/react';
 
 function ActiveProductListings() {
     const [activeListings, setActiveListings] = useState([]);
-    const userId = '61684686e96b9d376bf9985f'; // TODO: get actual user.id from local storage
+    const [error, setError] = useState(undefined);
+    const user = JSON.parse(window.localStorage.getItem('user'));
 
     useEffect(() => {
         axiosInstance
-            .get(`/products/active-listings/${userId}`)
+            .get(`/products/active-listings/${user._id}`)
             .then((res) => {
                 setActiveListings(
                     res.data.products.map((product) => ({
@@ -22,20 +24,28 @@ function ActiveProductListings() {
                 );
             })
             .catch((err) => {
-                console.log(err.response.data.msg);
+                console.log(err.response.data);
+                setError(err.response?.data?.msg);
+                console.log(error);
             });
     });
     return (
         <>
-            {activeListings.map((listing) => (
-                <ActiveProductListing
-                    description={listing.description}
-                    imageSrc={listing.images[0].src}
-                    price={listing.price}
-                    maxQuantity={listing.quantity}
-                    title={listing.title}
-                />
-            ))}
+            {error ? (
+                <Text textAlign='center' color='red'>
+                    {error}
+                </Text>
+            ) : (
+                activeListings.map((listing) => (
+                    <ActiveProductListing
+                        description={listing.description}
+                        imageSrc={listing.images[0].src}
+                        price={listing.price}
+                        maxQuantity={listing.quantity}
+                        title={listing.title}
+                    />
+                ))
+            )}
         </>
     );
 }
