@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {
     Flex,
     SimpleGrid,
@@ -11,16 +11,20 @@ import {
 import { axiosInstance } from '../../util/config';
 import OrderItem from './OrderItem';
 import { colors } from '../../util/constants';
+import { CartContext } from '../../util/context';
 
 const OrdersContainer = () => {
     const [ordersList, setOrdersList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    let { token } = useContext(CartContext);
+    if (!token) {
+        token = JSON.parse(window.localStorage.getItem('token'));
+    }
     useEffect(() => {
         axiosInstance
             .get('/orders/recent-order', {
                 headers: {
-                    'x-auth-token':
-                        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjE5ZjA3MzY2ZTNhZTcwMDIxMzMwOTUyIn0sImlhdCI6MTYzODgxNzc1MCwiZXhwIjoxNjM4ODIxMzUwfQ.4LWhTigk-EEtcc9dI_FJfxngLCTF2fXSJIUR7kJZyT0',
+                    'x-auth-token': token,
                 },
             })
             .then((res) => {
@@ -60,11 +64,11 @@ const OrdersContainer = () => {
                                     >
                                         <SimpleGrid columns={3} spacing={10}>
                                             <Box height='80px'>
-                                                <Text color={colors.neutralGray}>
+                                                <Text
+                                                    color={colors.neutralGray}
+                                                >
                                                     Order placed
                                                 </Text>
-                                                {/* order.created_at.getMonth(), order.created_at.getDate(), order.created_at.getFullYear() */}
-                                                {/* /{order.created_at.getDate()}/{order.created_at.getFullYear()} */}
                                                 <Text>
                                                     {new Date(
                                                         order.created_at
@@ -80,11 +84,17 @@ const OrdersContainer = () => {
                                                 </Text>
                                             </Box>
                                             <Box height='80px'>
-                                                <Text color={colors.neutralGray}>Total</Text>
+                                                <Text
+                                                    color={colors.neutralGray}
+                                                >
+                                                    Total
+                                                </Text>
                                                 <Text>{`$${order.totalAmount}`}</Text>
                                             </Box>
                                             <Box height='80px'>
-                                                <Text color={colors.neutralGray}>
+                                                <Text
+                                                    color={colors.neutralGray}
+                                                >
                                                     Order #
                                                 </Text>
                                                 <Text>{order._id}</Text>
