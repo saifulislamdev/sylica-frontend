@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import {
     AlertDialog,
     AlertDialogBody,
@@ -18,7 +18,7 @@ import {
 import { colors } from '../../util/constants';
 import { useHistory } from 'react-router';
 import { API_BASE_URL, axiosInstance } from '../../util/config';
-import axios from 'axios';
+import { CartContext } from '../../util/context';
 
 export default function ActiveProductListing({
     id,
@@ -37,17 +37,18 @@ export default function ActiveProductListing({
     const onClose = () => setIsOpen(false);
     const history = useHistory();
     const toast = useToast();
+    const { token } = useContext(CartContext);
+    if (!token) {
+        token = JSON.parse(window.localStorage.getItem('token'));
+    }
 
     const onClickDelete = () => {
-        axiosInstance.interceptors.request.use(function (config) {
-            const token = JSON.parse(localStorage.getItem('token'));
-            config.headers['x-auth-token'] = token;
-
-            return config;
-        });
-
         axiosInstance
-            .delete(`/products/${id}`)
+            .delete(`/products/${id}`, {
+                headers: {
+                    'x-auth-token': token,
+                },
+            })
             .then((res) => {
                 toast({
                     title: 'Product listing deleted.',
