@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import SVG from '../../assets/login.svg';
 import {
     Heading,
@@ -16,6 +16,7 @@ import {
 import { Link, useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 import { axiosInstance } from '../../util/config';
+import { CartContext } from '../../util/context';
 
 export default function LogIn() {
     const [email, setEmail] = useState('');
@@ -23,6 +24,8 @@ export default function LogIn() {
     const [error, setError] = useState(false); // if any input validation error occur
     const [errorMessage, setErrorMessage] = useState('');
     const history = useHistory();
+
+    const { setToken } = useContext(CartContext);
 
     // input validation schema
     const logInSchema = Yup.object().shape({
@@ -54,6 +57,7 @@ export default function LogIn() {
                         'user',
                         JSON.stringify(response.data.user)
                     );
+                    setToken(response.data.token);
                     history.push('/cart');
                 })
                 .catch((err) => {
