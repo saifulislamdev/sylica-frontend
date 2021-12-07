@@ -22,8 +22,8 @@ function App() {
         <CartContextWrapper>
             <ChakraProvider>
                 <Container maxWidth='container.xl' p={0}>
-                    <Navbar />
                     <Router>
+                        <Navbar />
                         <Switch>
                             <Route path='/' exact>
                                 <Home />
