@@ -11,6 +11,7 @@ import {
     useToast,
 } from '@chakra-ui/react';
 import { useStripe, useElements } from '@stripe/react-stripe-js';
+import { axiosInstance } from '../../util/config';
 import { CartContext } from '../../util/context';
 import { colors } from '../../util/constants';
 
@@ -53,14 +54,14 @@ const OrderSummary = ({ checkout }) => {
             toast({
                 title: 'Invalid card.',
                 status: 'error',
-                duration: 9000,
+                duration: 3000,
                 isClosable: true,
             });
         } else {
             toast({
                 title: 'Server error',
                 status: 'error',
-                duration: 9000,
+                duration: 3000,
                 isClosable: true,
             });
         }
@@ -77,51 +78,70 @@ const OrderSummary = ({ checkout }) => {
             'payment_intent_client_secret'
         );
 
-        if (!clientSecret) {
-            return;
+        if (clientSecret) {
+            stripe
+                .retrievePaymentIntent(clientSecret)
+                .then(({ paymentIntent }) => {
+                    switch (paymentIntent.status) {
+                        case 'succeeded': {
+                            const data = {
+                                totalAmount: calculateTotalPriceInCart(),
+                                productsPurchased: [
+                                    {
+                                        productId: '61908195cdec62705404cdd9',
+                                        quantity: '3',
+                                    },
+                                ],
+                            };
+                            axiosInstance
+                                .post('/orders/create-order', data, {
+                                    headers: {
+                                        'x-auth-token': JSON.parse(
+                                            localStorage.getItem('token')
+                                        ),
+                                    },
+                                })
+                                .then((res) => console.log(res.data))
+                                .catch((err) => console.log(err));
+                            toast({
+                                title: 'Payment succeeded.',
+                                status: 'success',
+                                duration: 3000,
+                                isClosable: true,
+                            });
+                            break;
+                        }
+
+                        case 'processing': {
+                            toast({
+                                title: 'Payment processing.',
+                                status: 'info',
+                                duration: 3000,
+                                isClosable: true,
+                            });
+                            break;
+                        }
+                        case 'requires_payment_method': {
+                            toast({
+                                title: 'Payment unsuccessful.',
+                                status: 'error',
+                                duration: 3000,
+                                isClosable: true,
+                            });
+                            break;
+                        }
+                        default: {
+                            toast({
+                                title: 'Server error',
+                                status: 'error',
+                                duration: 3000,
+                                isClosable: true,
+                            });
+                            break;
+                        }
+                    }
+                });
         }
-
-        stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-            switch (paymentIntent.status) {
-                case 'succeeded': {
-                    toast({
-                        title: 'Payment succeeded.',
-                        status: 'success',
-                        duration: 9000,
-                        isClosable: true,
-                    });
-                    break;
-                }
-
-                case 'processing': {
-                    toast({
-                        title: 'Payment processing.',
-                        status: 'info',
-                        duration: 9000,
-                        isClosable: true,
-                    });
-                    break;
-                }
-                case 'requires_payment_method': {
-                    toast({
-                        title: 'Payment unsuccessful.',
-                        status: 'error',
-                        duration: 9000,
-                        isClosable: true,
-                    });
-                    break;
-                }
-                default: {
-                    toast({
-                        title: 'Server error',
-                        status: 'error',
-                        duration: 9000,
-                        isClosable: true,
-                    });
-                    break;
-                }
-            }
-        });
     }, [stripe]);
 
     return (
