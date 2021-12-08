@@ -41,7 +41,11 @@ export default function Products({
                 setErrorMessage(err.response.data.msg); // msg is the field for error message from backend
                 setError(true);
             });
-    });
+        return () => {
+            setProducts({});
+            setLoaded(false);
+        };
+    }, []);
 
     return isLoaded && products ? (
         <Flex

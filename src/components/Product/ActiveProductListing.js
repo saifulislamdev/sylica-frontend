@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import {
     AlertDialog,
     AlertDialogBody,
@@ -13,9 +13,12 @@ import {
     Button,
     Image,
     VStack,
+    useToast,
 } from '@chakra-ui/react';
 import { colors } from '../../util/constants';
 import { useHistory } from 'react-router';
+import { API_BASE_URL, axiosInstance } from '../../util/config';
+import { CartContext } from '../../util/context';
 
 export default function ActiveProductListing({
     id,
@@ -33,6 +36,45 @@ export default function ActiveProductListing({
     const cancelRef = useRef();
     const onClose = () => setIsOpen(false);
     const history = useHistory();
+    const toast = useToast();
+    let { token } = useContext(CartContext);
+    if (!token) {
+        token = JSON.parse(window.localStorage.getItem('token'));
+    }
+
+    const onClickDelete = () => {
+        axiosInstance
+            .delete(`/products/${id}`, {
+                headers: {
+                    'x-auth-token': token,
+                },
+            })
+            .then((res) => {
+                toast({
+                    title: 'Product listing deleted.',
+                    description: res.data.msg,
+                    status: 'success',
+                    duration: '5000',
+                    isClosable: true,
+                    position: 'top',
+                });
+
+                setIsOpen(false);
+            })
+            .catch((err) => {
+                toast({
+                    title: 'Error occured',
+                    description:
+                        err.response?.data?.msg || 'Internal server error',
+                    status: 'error',
+                    duration: '5000',
+                    isClosable: true,
+                    position: 'top',
+                });
+
+                setIsOpen(false);
+            });
+    };
 
     return (
         <VStack
@@ -65,7 +107,7 @@ export default function ActiveProductListing({
             <Divider />
             <HStack alignItems='flex-start' spacing={6}>
                 <Image
-                    src={imageSrc}
+                    src={`${API_BASE_URL}${imageSrc}`}
                     alt={altImageText}
                     borderRadius='16px'
                     boxSize='150px'
@@ -118,7 +160,7 @@ export default function ActiveProductListing({
                                 </Button>
                                 <Button
                                     colorScheme='red'
-                                    onClick={onClose}
+                                    onClick={onClickDelete}
                                     ml={3}
                                 >
                                     Delete
