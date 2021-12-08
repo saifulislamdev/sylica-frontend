@@ -37,7 +37,7 @@ export default function ActiveProductListing({
     const onClose = () => setIsOpen(false);
     const history = useHistory();
     const toast = useToast();
-    const { token } = useContext(CartContext);
+    let { token } = useContext(CartContext);
     if (!token) {
         token = JSON.parse(window.localStorage.getItem('token'));
     }
