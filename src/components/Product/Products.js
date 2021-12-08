@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
-import { Flex, SimpleGrid, Skeleton, Text } from '@chakra-ui/react';
+import { Flex, SimpleGrid, Skeleton } from '@chakra-ui/react';
 import ProductListing from './ProductListing';
 import { axiosInstance } from '../../util/config';
 
 export default function Products({
-    error,
-    errorMessage,
     homePageProductIds,
     isForHomePage,
     isLoaded,
@@ -69,27 +67,31 @@ export default function Products({
                         : homePageProductIds.get(product.id); // if for home page, check if product is a home page product
                 })
                 .filter((product, index) => {
+                    // filter based on only products in current page of pagination
+                    // if not for products page, pageFirstProductIndex is always 0
+                    // if not for products page, pageLastProductIndex is always a fixed value as well (refer to the parent component for this value)
                     return (
                         pageFirstProductIndex <= index &&
                         index <= pageLastProductIndex
                     );
                 })
+                .filter((product) => {
+                    // filter based on search
+                    return product.title
+                        .toLowerCase()
+                        .includes(search.toLowerCase());
+                })
                 .map((product) => {
-                    if (
-                        product.title
-                            .toLowerCase()
-                            .includes(search.toLowerCase())
-                    )
-                        return (
-                            <ProductListing
-                                description={product.description}
-                                id={product.id}
-                                imageSrc={product.images[0].src}
-                                price={product.price}
-                                quantity={product.quantity}
-                                title={product.title}
-                            />
-                        );
+                    return (
+                        <ProductListing
+                            description={product.description}
+                            id={product.id}
+                            imageSrc={product.images[0]?.src}
+                            price={product.price}
+                            quantity={product.quantity}
+                            title={product.title}
+                        />
+                    );
                 })}
         </Flex>
     ) : (

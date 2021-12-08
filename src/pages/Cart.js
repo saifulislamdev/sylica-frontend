@@ -23,7 +23,7 @@ const stripePromise = loadStripe(
 );
 
 const Cart = () => {
-    const { cart, setCart, calculateTotalItemsInCart } =
+    const { cart, calculateTotalItemsInCart } =
         useContext(CartContext);
 
     return (

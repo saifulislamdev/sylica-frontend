@@ -29,11 +29,9 @@ export default function ProductDetailImages({ images, maxQuantity }) {
                         bg={colors.primary}
                         color={colors.neutralWhite}
                         colorScheme={colors.primary}
-                        left='10px'
-                        pos='relative'
-                        top='50px'
+                        mt='10px'
+                        pos='absolute'
                         variant='subtle'
-                        zIndex='2'
                     >
                         Out of Stock
                     </Tag>
@@ -76,10 +74,13 @@ export default function ProductDetailImages({ images, maxQuantity }) {
                                 }}
                                 src={`${API_BASE_URL}${image.src}`}
                                 fallbackSrc='https://via.placeholder.com/350'
+                                h='auto'
                                 cursor='pointer'
                                 loading='lazy'
                                 m={totalImages < 20 ? '2px' : '1px'}
-                                w={`min(75px, ${90 / totalImages}%)`}
+                                maxH='120px'
+                                maxW={`min(75px, ${90 / totalImages}%)`}
+                                w='auto'
                                 alt={image.name}
                                 key={`imageOption${i}`}
                             ></Image>

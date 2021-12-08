@@ -50,7 +50,11 @@ export default function ProductPagination({
     return (
         <Flex align='center' p='16px'>
             <Flex align='center' justify='flex-start'>
-                <Text color={colors.neutralGray} fontSize='sm' w='auto'>
+                <Text
+                    color={colors.neutralGray}
+                    fontSize='sm'
+                    w={['80px', 'auto', 'auto', 'auto', 'auto']}
+                >
                     Show items per page
                 </Text>
                 <Select
