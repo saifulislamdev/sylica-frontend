@@ -24,11 +24,10 @@ function ActiveProductListings() {
                 );
             })
             .catch((err) => {
-                console.log(err.response.data);
                 setError(err.response?.data?.msg);
                 console.log(error);
             });
-    });
+    }, [activeListings]);
     return (
         <>
             {error ? (
