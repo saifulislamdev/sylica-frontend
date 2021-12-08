@@ -1,3 +1,5 @@
+import { createStandaloneToast } from '@chakra-ui/react';
+
 /* If the item does not already exist in cart, create new cart item. If the item already exists in cart, simply increment the quantity of the cart item */
 export const addToCartOrIncrementQuantity = (
     handleAddQuantity,
@@ -6,6 +8,7 @@ export const addToCartOrIncrementQuantity = (
     id,
     imageURL,
     description,
+    quantity,
     title,
     unitPrice
 ) => {
@@ -17,11 +20,23 @@ export const addToCartOrIncrementQuantity = (
     if (!isInCart) {
         handleAddToCart({
             id,
-            quantity: 1,
+            quantity,
             unitPrice,
             imageURL,
             title,
             description,
         });
-    } else handleAddQuantity(id, cart[indexInCart].quantity + 1);
+    } else handleAddQuantity(id, cart[indexInCart].quantity + quantity);
+};
+
+export const addToCartToast = () => {
+    const toast = createStandaloneToast();
+
+    return toast({
+        title: 'Added to cart!',
+        description: `We've added the product to cart`,
+        position: 'bottom-right',
+        status: 'success',
+        isClosable: true,
+    });
 };

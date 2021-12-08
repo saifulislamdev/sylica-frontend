@@ -16,7 +16,10 @@ import { BsCartPlus } from 'react-icons/bs';
 import { API_BASE_URL } from '../../util/config';
 import { colors } from '../../util/constants';
 import { CartContext } from '../../util/context';
-import { addToCartOrIncrementQuantity } from '../../util/helpers';
+import {
+    addToCartOrIncrementQuantity,
+    addToCartToast,
+} from '../../util/helpers';
 
 export default function ProductListing({
     description,
@@ -46,11 +49,8 @@ export default function ProductListing({
                         <Tag
                             bg={colors.primary}
                             color={colors.neutralWhite}
-                            left='10px'
-                            pos='relative'
-                            top='50px'
+                            pos='absolute'
                             variant='subtle'
-                            zIndex='2'
                         >
                             Out of Stock
                         </Tag>
@@ -92,9 +92,11 @@ export default function ProductListing({
                         id,
                         `${API_BASE_URL}${imageSrc}`, // had to send with API_BASE_URL otherwise wouldn't show img
                         description,
+                        1,
                         title,
                         price
                     );
+                    addToCartToast();
                 }}
                 isDisabled={isOutOfStock}
                 borderRadius='6px'

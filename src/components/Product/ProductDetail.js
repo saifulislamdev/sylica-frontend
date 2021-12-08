@@ -21,7 +21,7 @@ import {
 
 import { colors } from '../../util/constants';
 import { CartContext } from '../../util/context';
-import { addToCartOrIncrementQuantity } from '../../util/helpers';
+import { addToCartOrIncrementQuantity, addToCartToast } from '../../util/helpers';
 
 export default function ProductDetail({
     id,
@@ -133,9 +133,11 @@ export default function ProductDetail({
                             id,
                             imageSrc,
                             description,
+                            quantity,
                             title,
                             price
                         );
+                        addToCartToast();
                     }}
                     isDisabled={quantity === 0}
                     colorScheme={colors.colorScheme}
@@ -164,6 +166,7 @@ export default function ProductDetail({
                         id,
                         imageSrc,
                         description,
+                        quantity,
                         title,
                         price
                     );
