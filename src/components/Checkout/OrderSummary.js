@@ -18,8 +18,12 @@ import { colors } from '../../util/constants';
 const OrderSummary = ({ checkout }) => {
     const stripe = useStripe();
     const elements = useElements();
-    const { calculateTotalItemsInCart, calculateTotalPriceInCart, cart } =
-        useContext(CartContext);
+    const {
+        calculateTotalItemsInCart,
+        calculateTotalPriceInCart,
+        cart,
+        setCart,
+    } = useContext(CartContext);
 
     const [isLoading, setIsLoading] = useState(false);
     const toast = useToast();
@@ -86,12 +90,10 @@ const OrderSummary = ({ checkout }) => {
                         case 'succeeded': {
                             const data = {
                                 totalAmount: calculateTotalPriceInCart(),
-                                productsPurchased: [
-                                    {
-                                        productId: '61908195cdec62705404cdd9',
-                                        quantity: '3',
-                                    },
-                                ],
+                                productsPurchased: cart.map((cartItem) => ({
+                                    productId: cartItem.id,
+                                    quantity: cartItem.quantity,
+                                })),
                             };
                             axiosInstance
                                 .post('/orders/create-order', data, {
@@ -101,7 +103,39 @@ const OrderSummary = ({ checkout }) => {
                                         ),
                                     },
                                 })
-                                .then((res) => console.log(res.data))
+                                .then((res) => {
+                                    setCart([]);
+                                    window.localStorage.setItem('cart', []);
+                                    const { productsPurchased } = data;
+                                    for (const product of productsPurchased) {
+                                        const data = {
+                                            quantity: product.quantity,
+                                        };
+                                        axiosInstance
+                                            .patch(
+                                                `/products/${product.productId}`,
+                                                data,
+                                                {
+                                                    headers: {
+                                                        'x-auth-token':
+                                                            JSON.parse(
+                                                                localStorage.getItem(
+                                                                    'token'
+                                                                )
+                                                            ),
+                                                    },
+                                                }
+                                            )
+                                            .then((res) =>
+                                                console.log(res.data)
+                                            )
+                                            .catch((err) =>
+                                                console.log(
+                                                    err.response?.data?.msg
+                                                )
+                                            );
+                                    }
+                                })
                                 .catch((err) => console.log(err));
                             toast({
                                 title: 'Payment succeeded.',
