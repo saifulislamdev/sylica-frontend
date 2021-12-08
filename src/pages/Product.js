@@ -39,7 +39,7 @@ export default function Products() {
         <SimpleGrid spacingY='32px'>
             <SimpleGrid row columns={2} minChildWidth='320px' spacingY='32px'>
                 <SimpleGrid column>
-                    {productInfo.images && productInfo.quantity && (
+                    {productInfo.images && (
                         <ProductDetailImages
                             images={productInfo.images}
                             maxQuantity={productInfo.quantity}
@@ -47,10 +47,7 @@ export default function Products() {
                     )}
                 </SimpleGrid>
                 <SimpleGrid column>
-                    {productInfo.title &&
-                        productInfo.description &&
-                        productInfo.price &&
-                        productInfo.quantity && (
+                    {productInfo && (
                             <ProductDetail
                                 id={id}
                                 imageSrc={`${API_BASE_URL}${productInfo.images[0].src}`}
