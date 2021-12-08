@@ -51,6 +51,7 @@ export default function ProductListing({
                             top='50px'
                             variant='subtle'
                             zIndex='2'
+                            data-testid='tag'
                         >
                             Out of Stock
                         </Tag>
@@ -79,7 +80,7 @@ export default function ProductListing({
                 <Text color={colors.neutralGray} mt='12px' size='xs'>
                     Price
                 </Text>
-                <Text size='xs' mb='12px'>
+                <Text size='xs' mb='12px' data-testid='price'>
                     ${String(price).includes('.') ? `${price}` : `${price}.00`}
                 </Text>
             </Box>
@@ -103,6 +104,7 @@ export default function ProductListing({
                 mb='12px'
                 py='16px'
                 size='xs'
+                data-testid='Add to Cart button'
             >
                 <Flex align='center' direction='row' justify='center'>
                     <Text
