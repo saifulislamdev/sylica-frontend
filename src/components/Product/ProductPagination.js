@@ -61,9 +61,14 @@ export default function ProductPagination({
                     mx='8px'
                     size='sm'
                     w='auto'
+                    data-testid='options'
                 >
-                    {productsPerPageOptions.map((option) => {
-                        return <option value={option}>{option}</option>;
+                    {productsPerPageOptions.map((option, index) => {
+                        return (
+                            <option value={option} key={`option${index}`}>
+                                {option}
+                            </option>
+                        );
                     })}
                 </Select>
             </Flex>
