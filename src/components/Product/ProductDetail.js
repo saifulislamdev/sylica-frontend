@@ -60,7 +60,11 @@ export default function ProductDetail({
             <Text color={colors.neutralGray} fontSize='xs'>
                 Price
             </Text>
-            <Text fontSize='2xl' mb='16px'>{`$${price}`}</Text>
+            <Text
+                fontSize='2xl'
+                mb='16px'
+                data-testid='price'
+            >{`$${price}`}</Text>
             {isOutOfStock && (
                 <Tag
                     bg={colors.primary}
@@ -68,6 +72,7 @@ export default function ProductDetail({
                     mb='16px'
                     px='16px'
                     variant='subtle'
+                    data-testid='tag'
                 >
                     Out of Stock
                 </Tag>
@@ -97,7 +102,7 @@ export default function ProductDetail({
                     order='1'
                     size='sm'
                     variant='input'
-                >
+                    >
                     <NumberInput
                         onChange={handleChange}
                         value={quantity}
@@ -106,6 +111,7 @@ export default function ProductDetail({
                         allowMouseWheel='true'
                         inputMode='numerical'
                         opacity='0.5'
+                        data-testid='quantity'
                     >
                         <NumberInputField />
                     </NumberInput>
@@ -143,6 +149,7 @@ export default function ProductDetail({
                     ml='8px'
                     order='3'
                     w='full'
+                    data-testid='Add to Cart button'
                 >
                     <Text
                         color={colors.neutralWhite}
@@ -175,6 +182,7 @@ export default function ProductDetail({
                 colorScheme={colors.colorScheme}
                 size='sm'
                 variant='outline'
+                data-testid='Buy now button'
             >
                 Buy now
             </Button>
