@@ -224,8 +224,7 @@ const OrderSummary = ({ checkout }) => {
                             <Button
                                 size='md'
                                 w='full'
-                                bg={colors.primary}
-                                color='white'
+                                colorScheme={colors.colorScheme}
                                 disabled={cart.length === 0}
                             >
                                 Checkout
@@ -241,8 +240,7 @@ const OrderSummary = ({ checkout }) => {
                             }
                             size='md'
                             w='full'
-                            bg={colors.primary}
-                            color='white'
+                            colorScheme={colors.colorScheme}
                             onClick={handleSubmit}
                         >
                             <span>
