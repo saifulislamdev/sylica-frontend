@@ -93,9 +93,8 @@ export default function SignUp() {
                 alignItems='flex-start'
                 bg='gray.50'
             >
-                <Heading size='2xl'>
-                    "Lorem ipsum dolor sit amet, consectetur. Lorem ipsum lorem
-                    ipsum"
+                <Heading size='2xl' lineHeight={1.5}>
+                    "Every purchase will be made easy with Sylica"
                 </Heading>
                 <Image src={SVG} alt='log-in-svg' boxSize='sm' />
             </VStack>
@@ -188,8 +187,7 @@ export default function SignUp() {
                                 type='submit'
                                 size='lg'
                                 w='full'
-                                bg={colors.primary}
-                                color='white'
+                                colorScheme={colors.colorScheme}
                             >
                                 Create Account
                             </Button>

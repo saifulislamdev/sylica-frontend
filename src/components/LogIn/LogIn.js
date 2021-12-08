@@ -17,6 +17,7 @@ import { Link, useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 import { axiosInstance } from '../../util/config';
 import { CartContext } from '../../util/context';
+import { colors } from '../../util/constants';
 
 export default function LogIn() {
     const [email, setEmail] = useState('');
@@ -81,9 +82,8 @@ export default function LogIn() {
                     alignItems='flex-start'
                     bg='gray.50'
                 >
-                    <Heading size='2xl'>
-                        "Lorem ipsum dolor sit amet, consectetur. Lorem ipsum
-                        lorem ipsum"
+                    <Heading size='2xl' lineHeight={1.5}>
+                        "Every purchase will be made easy with Sylica"
                     </Heading>
                     <Image src={SVG} alt='log-in-svg' boxSize='sm' />
                 </VStack>
@@ -135,8 +135,7 @@ export default function LogIn() {
                                 <Button
                                     size='lg'
                                     w='full'
-                                    bg='teal.500'
-                                    color='white'
+                                    colorScheme={colors.colorScheme}
                                     type='submit'
                                 >
                                     Sign In
