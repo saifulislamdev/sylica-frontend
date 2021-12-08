@@ -11,14 +11,19 @@ import {
     useToast,
 } from '@chakra-ui/react';
 import { useStripe, useElements } from '@stripe/react-stripe-js';
+import { axiosInstance } from '../../util/config';
 import { CartContext } from '../../util/context';
 import { colors } from '../../util/constants';
 
 const OrderSummary = ({ checkout }) => {
     const stripe = useStripe();
     const elements = useElements();
-    const { calculateTotalItemsInCart, calculateTotalPriceInCart, cart } =
-        useContext(CartContext);
+    const {
+        calculateTotalItemsInCart,
+        calculateTotalPriceInCart,
+        cart,
+        setCart,
+    } = useContext(CartContext);
 
     const [isLoading, setIsLoading] = useState(false);
     const toast = useToast();
@@ -53,14 +58,14 @@ const OrderSummary = ({ checkout }) => {
             toast({
                 title: 'Invalid card.',
                 status: 'error',
-                duration: 9000,
+                duration: 3000,
                 isClosable: true,
             });
         } else {
             toast({
                 title: 'Server error',
                 status: 'error',
-                duration: 9000,
+                duration: 3000,
                 isClosable: true,
             });
         }
@@ -77,51 +82,100 @@ const OrderSummary = ({ checkout }) => {
             'payment_intent_client_secret'
         );
 
-        if (!clientSecret) {
-            return;
+        if (clientSecret) {
+            stripe
+                .retrievePaymentIntent(clientSecret)
+                .then(({ paymentIntent }) => {
+                    switch (paymentIntent.status) {
+                        case 'succeeded': {
+                            const data = {
+                                totalAmount: calculateTotalPriceInCart(),
+                                productsPurchased: cart.map((cartItem) => ({
+                                    productId: cartItem.id,
+                                    quantity: cartItem.quantity,
+                                })),
+                            };
+                            axiosInstance
+                                .post('/orders/create-order', data, {
+                                    headers: {
+                                        'x-auth-token': JSON.parse(
+                                            localStorage.getItem('token')
+                                        ),
+                                    },
+                                })
+                                .then((res) => {
+                                    setCart([]);
+                                    window.localStorage.setItem('cart', []);
+                                    const { productsPurchased } = data;
+                                    for (const product of productsPurchased) {
+                                        const data = {
+                                            quantity: product.quantity,
+                                        };
+                                        axiosInstance
+                                            .patch(
+                                                `/products/${product.productId}`,
+                                                data,
+                                                {
+                                                    headers: {
+                                                        'x-auth-token':
+                                                            JSON.parse(
+                                                                localStorage.getItem(
+                                                                    'token'
+                                                                )
+                                                            ),
+                                                    },
+                                                }
+                                            )
+                                            .then((res) =>
+                                                console.log(res.data)
+                                            )
+                                            .catch((err) =>
+                                                console.log(
+                                                    err.response?.data?.msg
+                                                )
+                                            );
+                                    }
+                                })
+                                .catch((err) => console.log(err));
+                            toast({
+                                title: 'Payment succeeded.',
+                                status: 'success',
+                                duration: 3000,
+                                isClosable: true,
+                            });
+                            break;
+                        }
+
+                        case 'processing': {
+                            toast({
+                                title: 'Payment processing.',
+                                status: 'info',
+                                duration: 3000,
+                                isClosable: true,
+                            });
+                            break;
+                        }
+                        case 'requires_payment_method': {
+                            toast({
+                                title: 'Payment unsuccessful.',
+                                status: 'error',
+                                duration: 3000,
+                                isClosable: true,
+                            });
+                            break;
+                        }
+                        default: {
+                            toast({
+                                title: 'Server error',
+                                status: 'error',
+                                duration: 3000,
+                                isClosable: true,
+                            });
+                            break;
+                        }
+                    }
+                });
         }
-
-        stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-            switch (paymentIntent.status) {
-                case 'succeeded': {
-                    toast({
-                        title: 'Payment succeeded.',
-                        status: 'success',
-                        duration: 9000,
-                        isClosable: true,
-                    });
-                    break;
-                }
-
-                case 'processing': {
-                    toast({
-                        title: 'Payment processing.',
-                        status: 'info',
-                        duration: 9000,
-                        isClosable: true,
-                    });
-                    break;
-                }
-                case 'requires_payment_method': {
-                    toast({
-                        title: 'Payment unsuccessful.',
-                        status: 'error',
-                        duration: 9000,
-                        isClosable: true,
-                    });
-                    break;
-                }
-                default: {
-                    toast({
-                        title: 'Server error',
-                        status: 'error',
-                        duration: 9000,
-                        isClosable: true,
-                    });
-                    break;
-                }
-            }
-        });
     }, [stripe]);
 
     return (
@@ -170,8 +224,7 @@ const OrderSummary = ({ checkout }) => {
                             <Button
                                 size='md'
                                 w='full'
-                                bg={colors.primary}
-                                color='white'
+                                colorScheme={colors.colorScheme}
                                 disabled={cart.length === 0}
                             >
                                 Checkout
@@ -187,8 +240,7 @@ const OrderSummary = ({ checkout }) => {
                             }
                             size='md'
                             w='full'
-                            bg={colors.primary}
-                            color='white'
+                            colorScheme={colors.colorScheme}
                             onClick={handleSubmit}
                         >
                             <span>
