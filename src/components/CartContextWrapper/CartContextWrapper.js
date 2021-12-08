@@ -4,10 +4,14 @@ import { CartContext } from '../../util/context';
 
 export const CartContextWrapper = ({ children }) => {
     const [cart, setCart] = useState([]);
+    const [token, setToken] = useState('');
 
     useEffect(() => {
         if (window.localStorage.getItem('cart')) {
             setCart(JSON.parse(window.localStorage.getItem('cart')));
+        }
+        if (window.localStorage.getItem('token')) {
+            setToken(JSON.parse(window.localStorage.getItem('token')));
         }
     }, []);
 
@@ -77,7 +81,9 @@ export const CartContextWrapper = ({ children }) => {
         <CartContext.Provider
             value={{
                 cart,
+                token,
                 setCart,
+                setToken,
                 calculateTotalItemsInCart,
                 handleAddQuantity,
                 handleAddToCart,

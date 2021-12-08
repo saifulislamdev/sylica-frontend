@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import SVG from '../../assets/login.svg';
 import {
     Heading,
@@ -13,15 +13,19 @@ import {
     Text,
     Button,
 } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 import { axiosInstance } from '../../util/config';
+import { CartContext } from '../../util/context';
 
 export default function LogIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false); // if any input validation error occur
     const [errorMessage, setErrorMessage] = useState('');
+    const history = useHistory();
+
+    const { setToken } = useContext(CartContext);
 
     // input validation schema
     const logInSchema = Yup.object().shape({
@@ -45,7 +49,16 @@ export default function LogIn() {
                     password: password,
                 })
                 .then((response) => {
-                    console.log(response.data);
+                    window.localStorage.setItem(
+                        'token',
+                        JSON.stringify(response.data.token)
+                    );
+                    window.localStorage.setItem(
+                        'user',
+                        JSON.stringify(response.data.user)
+                    );
+                    setToken(response.data.token);
+                    history.push('/cart');
                 })
                 .catch((err) => {
                     setErrorMessage(err.response.data.msg); // msg is the field for error message from backend
