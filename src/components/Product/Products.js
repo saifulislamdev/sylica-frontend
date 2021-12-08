@@ -86,7 +86,7 @@ export default function Products({
                         <ProductListing
                             description={product.description}
                             id={product.id}
-                            imageSrc={product.images[0].src}
+                            imageSrc={product.images[0]?.src}
                             price={product.price}
                             quantity={product.quantity}
                             title={product.title}
